@@ -1,0 +1,92 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <div class="card card-w-title">
+            <h1>Movimientos</h1>
+
+            <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>
+            <br />
+
+            <div class="card card-w-title">
+                <h1></h1>
+
+                <div class="card no-margin">
+                    <h1></h1>
+                    <div class="ui-g form-group">
+                        <div class="ui-g-12 ui-md-6">
+
+                            <div class="ui-g-12 ui-md-4">
+                                <label for="calendar">Desde</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-8">
+                                <p-calendar id="calendar"></p-calendar>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <label for="calendar">Hasta</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-8">
+                                <p-calendar id="calendar"></p-calendar>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                            </div>
+                            <div class="ui-g-12 ui-md-8">
+                                <button pButton type="button" label="Aceptar" icon="fa fa-check-square"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p-table [columns]="cols" [value]="cuentas1" selectionMode="single" dataKey="cuenta" [(selection)]="cuentaSeleccionada"
+                        [paginator]="true" [rows]="10" [responsive]="true" paginatorPosition="both">
+                        <ng-template pTemplate="caption">
+                            LISTA DE MOVIMIENTOS
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr [pSelectableRow]="rowData">
+                                <td *ngFor="let col of columns">
+                                    <span class="ui-column-title">{{col.header}}</span>
+                                    {{rowData[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+
+
+
+
+                    <p-dialog header="Login" [resizable]="false" responsive="true" [(visible)]="dialogVisible">
+                        <div class="ui-g form-group" style="margin-bottom: 16px;">
+                            <div class="ui-g-12">
+                                <input type="text" pInputText placeholder="Name">
+                            </div>
+                            <div class="ui-g-12">
+                                <input type="password" pInputText placeholder="Password">
+                            </div>
+                        </div>
+
+                        <p-footer>
+                            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                                <button type="button" label="Login" icon="fa fa-user" (click)="dialogVisible=false"
+                                    pButton></button>
+                            </div>
+                        </p-footer>
+                    </p-dialog>
+
+                </div>
+                <br />
+
+            </div>
+
+
+        </div>
+
+    </div>

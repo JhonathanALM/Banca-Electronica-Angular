@@ -1,0 +1,17 @@
+//shades
+$primaryColor100:#EAE1DD;
+$primaryColor200:#DCCAC3;
+$primaryColor300:#D3BBB3;
+$primaryColor400:#C6ABA2;
+$primaryColor500:#B08D81;
+$primaryColor600:#7C5041;
+
+//main color
+$primaryColor:$primaryColor500;
+
+//highlight
+$highlightBgColor:#c7eaf4;
+$highlightBgColorDark:#b5e3f1;
+$highlightColorText:#304f58;
+
+@import '../sass/theme/_theme';

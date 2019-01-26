@@ -1,0 +1,24 @@
+<body>
+      <div class="container">
+        <h1>BANQUITO</h1>
+        <div class="ui-g-12 ui-md-4" style="text-align:center;width: 130%;">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+            <input type="text" [(ngModel)]="user" pInputText placeholder="Username">
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="ui-g-12 ui-md-4" style="text-align:center; width: 130%;">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-lock"></i></span>
+            <input type="password" [(ngModel)]="contra" pInputText placeholder="Password">
+          </div>
+        </div>
+        <br>
+        <br>
+        <button id="btnGuardar" mat-raised-button color="primary" style="width:150px;height:35px;" (click)="btnLogin()">Login</button>
+      </div>
+    <!-- </form> -->
+  
+  </body>

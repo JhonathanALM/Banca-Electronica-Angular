@@ -1,0 +1,61 @@
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <h1>Activación de Transferencias</h1>
+      
+      <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>    
+      <br/>
+      <p-table [columns]="cols" [value]="cuentas1" selectionMode="single" dataKey="cuenta" [(selection)]="cuentaSeleccionada"
+        [paginator]="true" [rows]="10" [responsive]="true" paginatorPosition="both">
+        <ng-template pTemplate="caption">
+          LISTA DE CUENTAS
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+              <span class="ui-column-title">{{col.header}}</span>
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <br />
+      <p-table [columns]="cols2" [value]="prestamos1" selectionMode="single" dataKey="id" [(selection)]="prestamoSeleccionado"
+        [paginator]="true" [rows]="10" [responsive]="true" paginatorPosition="both">
+        <ng-template pTemplate="caption">
+          LISTA DE PRÉSTAMOS
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+              <span class="ui-column-title">{{col.header}}</span>
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <br/>
+      <button type="button" icon="fa fa-refresh" label="Actualizar" pButton (click)="updateInfo($event)"></button>
+      
+    </div>
+  </div>
+
+</div>

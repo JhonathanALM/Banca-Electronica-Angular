@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "cuenta": "1",
+            "estado": "activo",
+            "saldo": 15,
+            "tipo": "ahorro"
+        },
+        {
+            "cuenta": "2",
+            "estado": "activo",
+            "saldo": 50,
+            "tipo": "corriente"
+        },
+        {
+            "cuenta": "3",
+            "estado": "activo",
+            "saldo": 66,
+            "tipo": "corriente"
+        }
+    ]
+}

@@ -1,0 +1,142 @@
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <h1>Transferencias Interbancarias</h1>
+
+      <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>
+      <br />
+
+      <div class="card card-w-title">
+        <div class="card no-margin">
+          <h1>Origen</h1>
+
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-md-6">
+
+              <div class="ui-g-12 ui-md-4">
+
+                <label for="input">Monto</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <input id="input" type="text" pInputText />
+              </div>
+
+              <div class="ui-g-12 ui-md-4">
+                <label for="dropdown">Cuenta</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <!--Aqui hay q cambiar-->
+                <p-dropdown id="dropdown" [options]="cities1" [(ngModel)]="selectedCity1" [autoWidth]="false"></p-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card no-margin">
+          <h1>Destino</h1>
+
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-md-6">
+
+
+              <div class="ui-g-12 ui-md-4">
+                <label for="dropdown">Banco Destino</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <!--Aqui hay q cambiar-->
+                <p-dropdown id="dropdown" [options]="cities1" [(ngModel)]="selectedCity1" [autoWidth]="false"></p-dropdown>
+              </div>
+
+              <div class="ui-g-12 ui-md-4">
+                Tipo de Cuenta
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <div class="ui-g">
+                  <div class="ui-g-12 ui-md-4">
+                    <p-radioButton name="rg" value="Ultima" label="Ahorros" [(ngModel)]="radioValue"></p-radioButton>
+                  </div>
+                  <div class="ui-g-12 ui-md-4">
+                    <p-radioButton name="rg" value="Icarus" label="Corriente" [(ngModel)]="radioValue"></p-radioButton>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="ui-g-12 ui-md-4">
+
+                <label for="input">Número de Cuenta</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <input id="input" type="text" pInputText />
+              </div>
+
+              <div class="ui-g-12 ui-md-4">
+                <label for="dropdown">Tipo de Identificación</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <!--Aqui hay q cambiar-->
+                <p-dropdown id="dropdown" [options]="cities1" [(ngModel)]="selectedCity1" [autoWidth]="false"></p-dropdown>
+              </div>
+
+              <div class="ui-g-12 ui-md-4">
+
+                <label for="input">Identificación</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <input id="input" type="text" pInputText />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card no-margin">
+          <h1>Concepto</h1>
+
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-md-6">
+
+              <div class="ui-g-12 ui-md-4">
+
+                <label for="input">Por Concepto de</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <input id="input" type="text" pInputText />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-g-12 ui-md-4">
+        </div>
+        <div class="ui-g-12 ui-md-8">
+          <button pButton type="button" label="Aceptar" icon="fa fa-check-square"></button>
+        </div>
+
+        <br>
+        <br>
+
+
+        <p-dialog header="Login" [resizable]="false" responsive="true" [(visible)]="dialogVisible">
+          <div class="ui-g form-group" style="margin-bottom: 16px;">
+            <div class="ui-g-12">
+              <input type="text" pInputText placeholder="Name">
+            </div>
+            <div class="ui-g-12">
+              <input type="password" pInputText placeholder="Password">
+            </div>
+          </div>
+
+          <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button type="button" label="Login" icon="fa fa-user" (click)="dialogVisible=false" pButton></button>
+            </div>
+          </p-footer>
+        </p-dialog>
+
+      </div>
+      <br />
+
+    </div>
+  </div>
+
+</div>

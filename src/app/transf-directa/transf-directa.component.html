@@ -1,0 +1,78 @@
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <h1>Transferencias Directas</h1>
+
+      <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>
+      <br />
+
+      <div class="card card-w-title">
+        <h1>Movimientos</h1>
+
+        <div class="card no-margin">
+          <h1></h1>
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-md-6">
+
+              <div class="ui-g-12 ui-md-4">
+                <label for="dropdown">Cuenta</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <!--Aqui hay q cambiar-->
+                <p-dropdown [options]="saldo" [(ngModel)]="cta_org" placeholder="Seleccione cuenta de origen"></p-dropdown>
+              </div>
+
+
+              <div class="ui-g-12 ui-md-4">
+
+                <label for="input">A la cuenta:</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+               <!--  <p-dropdown [options]="saldo1" [(ngModel)]="cta_dest" placeholder="Seleccione cuenta de destino"></p-dropdown> -->
+                <input id="input" [(ngModel)]="cta_dest" type="text" pInputText />
+              </div>
+
+              <div class="ui-g-12 ui-md-4">
+
+                <label for="input">Monto</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <input id="input" [(ngModel)]="monto" type="text" pInputText />
+              </div>
+
+
+              <div class="ui-g-12 ui-md-4">
+
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <button pButton type="button" label="Aceptar" (click)="btnAceptar()" icon="fa fa-check-square"></button>
+              </div>
+
+            </div>
+          </div>
+
+          
+
+          <p-dialog header="Login" [resizable]="false" responsive="true" [(visible)]="dialogVisible">
+            <div class="ui-g form-group" style="margin-bottom: 16px;">
+              <div class="ui-g-12">
+                <input type="text" pInputText placeholder="Name">
+              </div>
+              <div class="ui-g-12">
+                <input type="password" pInputText placeholder="Password">
+              </div>
+            </div>
+
+            <p-footer>
+              <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" label="Login" icon="fa fa-user" (click)="dialogVisible=false" pButton></button>
+              </div>
+            </p-footer>
+          </p-dialog>
+        </div>
+        <br />
+
+      </div>
+    </div>
+
+  </div>

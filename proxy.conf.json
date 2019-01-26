@@ -1,0 +1,22 @@
+{
+    "/Modulo-Cuentas-Pll-web/api/*":{
+        "target":"http://40.87.45.204:8080",
+        "secure":false,
+        "changeOrigin":true
+    },
+    "/Prestamo-web/api/*":{
+        "target":"http://13.82.133.134:8084",
+        "secure":false,
+        "changeOrigin":true
+    },
+    "/KYC-mongo-rest-web/api/*":{
+        "target":"http://kyc.strangled.net:8080",
+        "secure":false,
+        "changeOrigin":true
+    },
+    "/user/*": {
+        "target": "http://127.0.0.1:2300",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
