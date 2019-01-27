@@ -1,88 +1,68 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/primeng';
-
-import { CuentasService } from '../pos-consolidada/service/cuentas.service';
-import { Usuario } from './domain/usuario';
-import { Cuenta } from './domain/cuenta';
-import { Prestamo } from './domain/prestamo';
+import { FormatoFechaPipe } from '../util/formato-fecha.pipe';
+import { PagosService } from './service/pagos.service';
+import { ReqPago } from './domain/reqpago';
+import { Pago } from './domain/pago';
 
 
 
 @Component({
   selector: 'app-prestamos-pagos',
   templateUrl: './prestamos-pagos.component.html',
-  styleUrls: ['./prestamos-pagos.component.css']
+  styleUrls: ['./prestamos-pagos.component.css'],
+  providers: [FormatoFechaPipe]
 })
 export class PrestamosPagosComponent implements OnInit {
 
-  //Listas
-  cuentas1: Cuenta[];
-  prestamos1: Prestamo[];
+  pagos: Pago[];
+  unPago: Pago;
 
-  //distribución
-  cols: any[];
-  cols2: any[];
+  montoTotal: Number = 10000.0;
+  valorPagar: String;
+  permitePago: boolean = false;
+  display: boolean = false;
 
-  cuentaSeleccionada: Cuenta;
-  prestamoSeleccionado: Cuenta;
+  requestPago: ReqPago;
 
-  unUsuario: Usuario;
-  identificadorUsuario: MenuItem[];
-
-  constructor(private cuentasService: CuentasService) { }
+  constructor( private pagosService: PagosService) { }
 
   ngOnInit() {
-    this.obtenerListaCuentas();
-    this.obtenerListaPrestamos();
-    this.obtenerUnUsuario();
-    this.cols = [
-      { field: 'cuenta', header: 'Cuenta' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'saldo', header: 'Saldo' },
-      { field: 'tipo', header: 'Tipo' }
-    ];
-    this.cols2 = [
-      { field: 'numero', header: 'Número' },
-      { field: 'tipo', header: 'Tipo' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'monto', header: 'Monto' },
-      { field: 'fecha', header: 'Fecha' },
-      { field: 'saldo', header: 'Saldo' }
-    ];
-    
+    this.obtenerInfoPago();
+
   }
 
-
-  obtenerListaCuentas() {
+  obtenerInfoPago() {
     
-    this.cuentasService.getListaCuentas().subscribe((data) => {
-      console.log("lista Cuentas",data);
-      this.cuentas1 = data;
+    this.pagosService.getPagos().then(pagos => {
+      this.pagos = pagos;
+      this.unPago = this.pagos[0];
+      this.estadoPago();
     });
   }
-  
-  obtenerListaPrestamos() {
-    
-    this.cuentasService.getListaPrestamos().subscribe((data) => {
-      console.log("lista Prestamos",data);
-      this.prestamos1 = data;
-    });
+  estadoPago() {
+    var valorPago = Number(this.valorPagar);
+    this.permitePago = (valorPago <= this.unPago.valorCuota) ? true : false;
   }
 
-  obtenerUnUsuario() {
-    this.cuentasService.getUnUsuario().subscribe((data) => {
-      console.log("usr",data);
-      this.identificadorUsuario = [];
-      
-      this.unUsuario = data;
-      this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
-    });
+  mostrarDetallePago(event: Event, pago: Pago) {
+    this.unPago = pago;
+    this.display = true;
+    event.preventDefault();
   }
 
-  updateInfo(){
-    console.log("click");
-    this.obtenerListaCuentas();
-    this.obtenerListaPrestamos();
+  realizarPago() {
+    this.display = false;
+    this.requestPago = {
+      id: this.unPago.numCuota,
+      valorPagado: Number(this.valorPagar)
+    }
+    console.log("realizando pago... ", this.requestPago);
+    //this.pagosService.sendPrestamo(this.requestPago);
+    this.obtenerInfoPago();
+  }
+
+  toNumber(_valor){
+    return parseFloat(_valor).toFixed(2);
   }
 
 }

@@ -1,15 +1,99 @@
 <div class="ui-g">
   <div class="ui-g-12">
     <div class="card card-w-title">
-      <h1>Pagos Préstamos</h1>
-      
-      <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>    
-      <br/>
-     
+      <h1>Pago de Prestamo</h1>
 
-      <br/>
-      
+      <p-dataView #dv [value]="pagos" [paginator]="false" [rows]="10" paginatorPosition="both" filterBy="id"
+        [sortField]="sortField" [sortOrder]="sortOrder">
+        <p-header>
+          <div class="ui-helper-clearfix">
+            <div class="ui-g">
+              <div class="ui-g-12 ui-md-4">
+                Descripción del Prestamo
+              </div>
+            </div>
+          </div>
+        </p-header>
+
+        <ng-template let-pago pTemplate="listItem">
+          <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+            <div class="ui-g-12 ui-md-6 car-details">
+              <div class="ui-g">
+
+                <div class="ui-g-4 ui-sm-6">Número Cuota: </div>
+                <div class="ui-g-8 ui-sm-6">
+                  <b>{{pago.numCuota}}</b>
+                </div>
+
+                <div class="ui-g-4 ui-sm-6">Valor Cuota: </div>
+                <div class="ui-g-8 ui-sm-6">
+                  <b>{{pago.valorCuota}}</b>
+                </div>
+
+                <div class="ui-g-4 ui-sm-6">Fecha: </div>
+                <div class="ui-g-8 ui-sm-6">
+                  <b>{{pago.fechaAmortizacion | formatoFecha}}</b>
+                </div>
+
+                <div class="ui-g-4 ui-sm-6">Estado: </div>
+                <div class="ui-g-8 ui-sm-6">
+                  <b [ngClass]="(pago.estado=='Pendiente')?'badge-pendiente':'badge-pagado'">{{pago.estado}}</b>
+                </div>
+
+
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 search-icon" *ngIf="(pago.estado=='Pendiente')? true:false">
+              <div class="ui-g">
+
+                <div class="ui-g-4 ui-sm-6">Valor a Pagar: </div>
+                <div class="ui-g-8 ui-sm-6 text-derecha">
+                  <input type="text" pInputText pKeyFilter="pnum" [(ngModel)]="valorPagar" (keyup)="estadoPago($event)">
+                </div>
+                <div class="ui-g-4 ui-sm-6"></div>
+                <div class="ui-g-8 ui-sm-6 text-derecha">
+                  <p-button label="Realizar Pago" icon="fa fa-money" (onClick)="mostrarDetallePago($event, pago)" [disabled]="!permitePago"></p-button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </ng-template>
+
+      </p-dataView>
+
     </div>
   </div>
+
+
+
+  <p-dialog header="Detalle del Pago" [(visible)]="display" [responsive]="true" 
+  showEffect="fade" [modal]="true" [minY]="70"
+    [style]="{maxWidth: '400px'}" (onAfterHide)="onDialogHide()">
+    <div class="ui-g" *ngIf="unPago">
+
+      <div class="ui-g-6">Prestamo Nº: </div>
+      <div class="ui-g-6 text-derecha">{{unPago.numCuota}}</div>
+
+      <div class="ui-g-6">Prestamo Total: </div>
+      <div class="ui-g-6 text-derecha">{{ toNumber(montoTotal)}}</div>
+
+      <div class="ui-g-6">Valor Cuotal Actual: </div>
+      <div class="ui-g-6 text-derecha">{{ toNumber(unPago.valorCuota) }}</div>
+
+      <div class="ui-g-6">Pago a realizar: </div>
+      <div class="ui-g-6 text-derecha">{{ toNumber(valorPagar) }}</div>
+      <div class="ui-g-12 text-derecha">_________________________________________________________________</div>
+      <div class="ui-g-6">Saldo: </div>
+      <div class="ui-g-6 text-derecha">{{ toNumber(unPago.valorCuota - valorPagar)}}</div>
+        
+    </div>
+    <p-footer>
+        <p-button label="Confirmar Pago" icon="fa fa-money" (onClick)="realizarPago($event, pago)"></p-button>  
+      <p-button label="Cerrar" icon="fa fa-close" (onClick)="display=false" class="ui-button-secondary"></p-button>  
+        
+    </p-footer>
+  </p-dialog>
 
 </div>

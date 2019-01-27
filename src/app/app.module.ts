@@ -204,7 +204,7 @@ import { FormatoFechaPipe } from './util/formato-fecha.pipe';
         TransfOtrosComponent,
         LoginComponent,
         TemplateComponent,
-        FormatoFechaPipe
+        FormatoFechaPipe,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
