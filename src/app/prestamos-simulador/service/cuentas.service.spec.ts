@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CuentasService } from './cuentas.service';
+import { CuentasService } from './simulador.service';
 
 describe('CuentasService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

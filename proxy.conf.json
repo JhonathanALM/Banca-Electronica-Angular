@@ -5,7 +5,7 @@
         "changeOrigin":true
     },
     "/Prestamo-web/api/*":{
-        "target":"http://13.82.133.134:8084",
+        "target":"http://13.82.133.134:8080",
         "secure":false,
         "changeOrigin":true
     },
