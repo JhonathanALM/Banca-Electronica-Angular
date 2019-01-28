@@ -1,0 +1,11 @@
+{
+    "data": [
+        {
+            "estado": "Pendiente",
+            "fechaAmortizacion": "2019-01-23T18:25:43.511Z",
+            "id": 13,
+            "numCuota": 1,
+            "valorCuota": 979.84
+          }
+    ]
+}
