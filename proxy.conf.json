@@ -8,11 +8,6 @@
         "secure":false,
         "changeOrigin":true
     },
-    "/Prestamo-web/api/*":{
-        "target":"http://13.82.133.134:8080",
-        "secure":false,
-        "changeOrigin":true
-    },
     "/KYC-mongo-rest-web/api/*":{
         "target":"http://kyc.strangled.net:8080",
         "secure":false,

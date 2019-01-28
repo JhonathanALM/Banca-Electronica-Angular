@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
@@ -6,6 +7,8 @@ import { Usuario } from './domain/usuario';
 import { Cuenta } from './domain/cuenta';
 import { Prestamo } from './domain/prestamo';
 import { SelectItem } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { Message } from 'primeng/components/common/api';
 
 
 @Component({
@@ -39,9 +42,10 @@ export class TransfDirectaComponent implements OnInit {
   monto: any = "";
 
   transfer: any = [];
-  
+  msgs: Message[] = [];
 
-  constructor(private cuentasService: CuentasService) { 
+
+  constructor(private cuentasService: CuentasService) {
     this.saldo = [
       { label: 'Audi', value: 'Audi' },
       { label: 'BMW', value: 'BMW' },
@@ -59,7 +63,7 @@ export class TransfDirectaComponent implements OnInit {
   ngOnInit() {
     this.obtenerListaCuentas();
     this.obtenerListaPrestamos();
-    this.obtenerUnUsuario();       
+    this.obtenerUnUsuario();
   }
 
 
@@ -81,18 +85,24 @@ export class TransfDirectaComponent implements OnInit {
       this.prestamos1 = data;
     });
   }
-  
+
   btnAceptar() {
-    this.cuentasService.getTransferencia(this.cta_org, this.cta_dest, this.monto).subscribe((data)=>{
-      console.log("DATA=:>",data);
-    });
+
+      this.cuentasService.getTransferencia(this.cta_org, this.cta_dest, this.monto).subscribe((data) => {        
+        var aux = data.status;
+        if (aux == 201) {
+          this.msgs = [];
+          this.msgs.push({ severity: 'success', summary: 'Exito', detail: 'Transferencia realizada correctamente' });
+        }
+        console.log(aux);
+      });
+
   }
 
   obtenerUnUsuario() {
     this.cuentasService.getUnUsuario().subscribe((data) => {
-      console.log("usr",data);
+      console.log("usr", data);
       this.identificadorUsuario = [];
-      
       this.unUsuario = data;
       this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });

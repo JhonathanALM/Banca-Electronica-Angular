@@ -34,7 +34,8 @@ export class PrestamosPagosComponent implements OnInit {
   obtenerInfoPago() {
     
     this.pagosService.getUnPrestamo("1719174580").subscribe((data) => {
-      this.pagos = data;
+      this.pagos =[];      
+      this.pagos.push(data);
       this.unPago = this.pagos[0];
       this.estadoPago();
     });

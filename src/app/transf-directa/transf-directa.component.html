@@ -8,6 +8,7 @@
 
       <div class="card card-w-title">
         <h1>Movimientos</h1>
+        <p-messages [(value)]="msgs"></p-messages>
 
         <div class="card no-margin">
           <h1></h1>
@@ -28,7 +29,7 @@
                 <label for="input">A la cuenta:</label>
               </div>
               <div class="ui-g-12 ui-md-8">
-               <!--  <p-dropdown [options]="saldo1" [(ngModel)]="cta_dest" placeholder="Seleccione cuenta de destino"></p-dropdown> -->
+                <!--  <p-dropdown [options]="saldo1" [(ngModel)]="cta_dest" placeholder="Seleccione cuenta de destino"></p-dropdown> -->
                 <input id="input" [(ngModel)]="cta_dest" type="text" pInputText />
               </div>
 
@@ -47,28 +48,15 @@
               <div class="ui-g-12 ui-md-8">
                 <button pButton type="button" label="Aceptar" (click)="btnAceptar()" icon="fa fa-check-square"></button>
               </div>
+              <div class="ui-g-12 ui-md-8">
+                <button type="button" pButton (click)="showSuccess()" label="Success" class="ui-button-success"></button>
+              </div>
+
 
             </div>
           </div>
 
-          
 
-          <p-dialog header="Login" [resizable]="false" responsive="true" [(visible)]="dialogVisible">
-            <div class="ui-g form-group" style="margin-bottom: 16px;">
-              <div class="ui-g-12">
-                <input type="text" pInputText placeholder="Name">
-              </div>
-              <div class="ui-g-12">
-                <input type="password" pInputText placeholder="Password">
-              </div>
-            </div>
-
-            <p-footer>
-              <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" label="Login" icon="fa fa-user" (click)="dialogVisible=false" pButton></button>
-              </div>
-            </p-footer>
-          </p-dialog>
         </div>
         <br />
 
