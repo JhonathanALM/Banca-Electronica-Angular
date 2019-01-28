@@ -1,5 +1,9 @@
 {
-    "/Modulo-Cuentas-Pll-web/api/*":{
+    "/Prestamo-web/api/*":{
+        "target":"http://13.82.133.134:8080",
+        "secure":false,
+        "changeOrigin":true
+    },"/Modulo-Cuentas-Pll-web/api/*":{
         "target":"http://40.87.45.204:8080",
         "secure":false,
         "changeOrigin":true
