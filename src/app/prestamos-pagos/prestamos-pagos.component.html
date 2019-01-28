@@ -32,7 +32,7 @@
 
                 <div class="ui-g-4 ui-sm-6">Fecha: </div>
                 <div class="ui-g-8 ui-sm-6">
-                  <b>{{pago.fechaAmortizacion | formatoFecha}}</b>
+                  <b>{{toDate(pago.fechaAmortizacion) | formatoFecha}}</b>
                 </div>
 
                 <div class="ui-g-4 ui-sm-6">Estado: </div>
@@ -52,7 +52,8 @@
                 </div>
                 <div class="ui-g-4 ui-sm-6"></div>
                 <div class="ui-g-8 ui-sm-6 text-derecha">
-                  <p-button label="Realizar Pago" icon="fa fa-money" (onClick)="mostrarDetallePago($event, pago)" [disabled]="!permitePago"></p-button>
+                  <p-button label="Realizar Pago" icon="fa fa-money" (onClick)="mostrarDetallePago($event, pago)"
+                    [disabled]="!permitePago"></p-button>
                 </div>
 
               </div>
@@ -68,8 +69,7 @@
 
 
 
-  <p-dialog header="Detalle del Pago" [(visible)]="display" [responsive]="true" 
-  showEffect="fade" [modal]="true" [minY]="70"
+  <p-dialog header="Detalle del Pago" [(visible)]="display" [responsive]="true" showEffect="fade" [modal]="true" [minY]="70"
     [style]="{maxWidth: '400px'}" (onAfterHide)="onDialogHide()">
     <div class="ui-g" *ngIf="unPago">
 
@@ -87,12 +87,12 @@
       <div class="ui-g-12 text-derecha">_________________________________________________________________</div>
       <div class="ui-g-6">Saldo: </div>
       <div class="ui-g-6 text-derecha">{{ toNumber(unPago.valorCuota - valorPagar)}}</div>
-        
+
     </div>
     <p-footer>
-        <p-button label="Confirmar Pago" icon="fa fa-money" (onClick)="realizarPago($event, pago)"></p-button>  
-      <p-button label="Cerrar" icon="fa fa-close" (onClick)="display=false" class="ui-button-secondary"></p-button>  
-        
+      <p-button label="Confirmar Pago" icon="fa fa-money" (onClick)="realizarPago($event, pago)"></p-button>
+      <p-button label="Cerrar" icon="fa fa-close" (onClick)="display=false" class="ui-button-secondary"></p-button>
+
     </p-footer>
   </p-dialog>
 

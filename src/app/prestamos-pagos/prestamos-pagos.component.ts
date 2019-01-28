@@ -33,11 +33,17 @@ export class PrestamosPagosComponent implements OnInit {
 
   obtenerInfoPago() {
     
-    this.pagosService.getPagos().then(pagos => {
-      this.pagos = pagos;
+    this.pagosService.getUnPrestamo("1719174580").subscribe((data) => {
+      this.pagos = data;
       this.unPago = this.pagos[0];
       this.estadoPago();
     });
+
+    /* this.pagosService.getPagos().then(pagos => {
+      this.pagos = pagos;
+      this.unPago = this.pagos[0];
+      this.estadoPago();
+    }); */
   }
   estadoPago() {
     var valorPago = Number(this.valorPagar);
@@ -63,6 +69,12 @@ export class PrestamosPagosComponent implements OnInit {
 
   toNumber(_valor){
     return parseFloat(_valor).toFixed(2);
+  }
+
+  toDate(_miString){
+    let patron = "[UTC]";
+    let nuevoValor    = "";
+    return _miString.replace(patron, nuevoValor);
   }
 
 }

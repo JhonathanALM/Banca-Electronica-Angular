@@ -5,7 +5,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Pago } from '../domain/pago';
 import { ReqPago } from '../domain/reqpago';
 
-const endpointPrestamo = '/mi/ruta/servicio'; 
+const endpointPrestamo = '/Prestamo-web/api/cuotaAmortizacion/'; 
 
 @Injectable({
   providedIn: 'root'
