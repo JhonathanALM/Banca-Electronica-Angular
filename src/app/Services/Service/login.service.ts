@@ -1,10 +1,7 @@
-import { Usuario } from './../../transf-activacion/domain/usuario';
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs/internal/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { map, catchError, tap } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 
 const endpointLogin = '/user/';
@@ -16,16 +13,16 @@ const endpointLogin = '/user/';
 
 export class LoginService {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute,private router: Router) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
   private extractData(res: Response) {
     let body = res;
     return body || {};
   }
 
-  getListaCuentas(user:String) : Observable<any[]> {
-    const url=endpointLogin+user;
+  getListaCuentas(user: String): Observable<any[]> {
+    const url = endpointLogin + user;
     console.log(url);
-    return this.http.get<any>(url);    
+    return this.http.get<any>(url);
   }
 
   setUser(Usuario): void {
@@ -38,13 +35,15 @@ export class LoginService {
   getToken() {
     return localStorage.getItem("accessToken");
   }
-  getCurrentUser(){
-    console.log('Estoy aqui...');
-    let user_string = localStorage.getItem("currentUser");   
+  getCurrentUser() {
+    console.log('Consulto');
+    let user_string = localStorage.getItem("currentUser");
     if (!isNullOrUndefined(user_string)) {
       let user = JSON.parse(user_string);
+      console.log("envie un usuario");
       return user;
     } else {
+      console.log("no envie nada");
       return null;
     }
   }

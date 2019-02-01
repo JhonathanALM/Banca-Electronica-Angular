@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormatoFechaPipe } from '../util/formato-fecha.pipe';
-import { PagosService } from './service/pagos.service';
-import { ReqPago } from './domain/reqpago';
-import { Pago } from './domain/pago';
+import { PagosService } from '../Services/Service/pagos.service';
+import { ReqPago } from '../Services/domain/reqpago';
+import { Pago } from '../Services/domain/pago';
+import { LoginService } from './../services/service/login.service';
 
 
 
@@ -23,28 +24,24 @@ export class PrestamosPagosComponent implements OnInit {
   display: boolean = false;
 
   requestPago: ReqPago;
+  curretUser:any;
 
-  constructor( private pagosService: PagosService) { }
+  constructor( private pagosService: PagosService, private auth:LoginService) { }
 
   ngOnInit() {
+    this.curretUser = this.auth.getCurrentUser();
     this.obtenerInfoPago();
 
   }
 
   obtenerInfoPago() {
     
-    this.pagosService.getUnPrestamo("1719174580").subscribe((data) => {
+    this.pagosService.getUnPrestamo(this.curretUser).subscribe((data) => {
       this.pagos =[];      
       this.pagos.push(data);
       this.unPago = this.pagos[0];
       this.estadoPago();
     });
-
-    /* this.pagosService.getPagos().then(pagos => {
-      this.pagos = pagos;
-      this.unPago = this.pagos[0];
-      this.estadoPago();
-    }); */
   }
   estadoPago() {
     var valorPago = Number(this.valorPagar);

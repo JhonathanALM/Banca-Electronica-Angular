@@ -1,9 +1,10 @@
 import { Component, OnInit,PipeTransform } from '@angular/core';
-import { HistorialService } from './service/historial.service';
-import { Historial } from './domain/historial';
-import { CuentasService } from 'src/app/pos-consolidada/service/cuentas.service';
-import { Cuenta } from 'src/app/pos-consolidada/domain/cuenta';
+import { HistorialService } from '../Services/service/historial.service';
+import { Historial } from '../Services/domain/historial';
+import { CuentasService } from 'src/app/Services/service/cuentas.service';
+import { Cuenta } from 'src/app/Services/domain/cuenta';
 import { FormatoFechaPipe } from '../util/formato-fecha.pipe';
+import { LoginService } from './../services/service/login.service';
 
  @Component({
   selector: 'app-transf-historial',
@@ -27,16 +28,15 @@ export class TransfHistorialComponent implements OnInit {
 
    //nCedula:String;
   nCedulaKYC:String;
+  curretUser:any;
 
 
-   constructor(private historialService: HistorialService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe) { }
+   constructor(private historialService: HistorialService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe, private auth:LoginService) { }
 
    ngOnInit() {
+    this.curretUser = this.auth.getCurrentUser();
+    this.nCedulaKYC = "1004456891";
 
-     //this.nCedula  = "1004456891";
-    this.nCedulaKYC = "1004456891";// =  "1007785605";
-    //this.fechaDesde = new Date();
-    //this.fechaHasta = new Date();
     this.puedoBuscar();
     this.obtenerListaCuentas();
     this.cols = [
@@ -53,7 +53,7 @@ export class TransfHistorialComponent implements OnInit {
 
    obtenerListaCuentas() {
 
-     this.cuentasService.getListaCuentas().subscribe((data) => {
+     this.cuentasService.getListaCuentas(this.curretUser).subscribe((data) => {
       console.log("lista Cuentas",data);
       this.cuentas = data;
       this.cuentaSeleccionada = this.cuentas[0];

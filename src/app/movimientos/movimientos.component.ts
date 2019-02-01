@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
-import { CuentasService } from '../pos-consolidada/service/cuentas.service';
-import { Usuario } from './domain/usuario';
-import { Cuenta } from './domain/cuenta';
-import { Prestamo } from './domain/prestamo';
-
-
+import { CuentasService } from '../Services/service/cuentas.service';
+import { Usuario } from '../Services/domain/usuario';
+import { Cuenta } from '../Services/domain/cuenta';
 
 @Component({
   selector: 'app-movimientos',
@@ -33,7 +30,6 @@ export class MovimientosComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerListaCuentas();
-   // this.obtenerListaPrestamos();
     this.obtenerUnUsuario();
     this.cols = [
       { field: 'cuenta', header: 'Cuenta' },
@@ -41,36 +37,21 @@ export class MovimientosComponent implements OnInit {
       { field: 'saldo', header: 'Saldo' },
       { field: 'tipo', header: 'Tipo' }
     ];
-    /*this.cols2 = [
-      { field: 'numero', header: 'Número' },
-      { field: 'tipo', header: 'Tipo' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'monto', header: 'Monto' },
-      { field: 'fecha', header: 'Fecha' },
-      { field: 'saldo', header: 'Saldo' }
-    ];*/
-    
+
   }
 
 
   obtenerListaCuentas() {
     
-    this.cuentasService.getListaCuentas().subscribe((data) => {
+    this.cuentasService.getListaCuentas("1004456891").subscribe((data) => {
       console.log("lista Cuentas",data);
       this.cuentas1 = data;
     });
   }
-  
- /* obtenerListaPrestamos() {
-    
-    this.cuentasService.getListaPrestamos().subscribe((data) => {
-      console.log("lista Prestamos",data);
-      this.prestamos1 = data;
-    });
-  }*/
+
 
   obtenerUnUsuario() {
-    this.cuentasService.getUnUsuario().subscribe((data) => {
+    this.cuentasService.getUnUsuario("1004456891").subscribe((data) => {
       console.log("usr",data);
       this.identificadorUsuario = [];
       

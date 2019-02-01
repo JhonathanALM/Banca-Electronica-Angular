@@ -83,7 +83,6 @@ import { MovimientosComponent } from './movimientos/movimientos.component';
 import { PrestamosSoliComponent } from './prestamos-solicitud/prestamos-soli.component';
 import { PrestamosPagosComponent } from './prestamos-pagos/prestamos-pagos.component';
 import { PrestamoSimuladorComponent } from './prestamos-simulador/prestamo-simu.component';
-import { TransfActivacionComponent } from './transf-activacion/transf-activacion.component';
 import { TransfDirectaComponent } from './transf-directa/transf-directa.component';
 import { TransfHistorialComponent } from './transf-historial/transf-historial.component';
 import { TransfOtrosComponent } from './transf-otros/transf-otros.component';
@@ -91,7 +90,7 @@ import { TemplateComponent } from './template/template.component';
 import { LoginComponent } from './login/login.component';
 
 
-import { CuentasService } from './pos-consolidada/service/cuentas.service';
+import { CuentasService } from './Services/service/cuentas.service';
 import { FormatoFechaPipe } from './util/formato-fecha.pipe';
 
 @NgModule({
@@ -179,7 +178,6 @@ import { FormatoFechaPipe } from './util/formato-fecha.pipe';
         PrestamosSoliComponent,
         PrestamosPagosComponent,
         PrestamoSimuladorComponent,
-        TransfActivacionComponent,
         TransfDirectaComponent,
         TransfHistorialComponent,
         TransfOtrosComponent,

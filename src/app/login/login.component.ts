@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './service/login.service';
+import { LoginService } from '../services/service/login.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material'
 
 
 @Component({

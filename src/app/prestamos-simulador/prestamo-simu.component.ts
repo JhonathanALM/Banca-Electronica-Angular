@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
-import { Simulador } from './domain/simulador';
-import { Usuario } from './domain/usuario';
-import {SimuladorService} from './service/simulador.service';
-import { CuentasService } from '../pos-consolidada/service/cuentas.service';
+import { Simulador } from '../Services/domain/simulador';
+import { Usuario } from '../Services/domain/usuario';
+import { CuentasService } from '../Services/service/cuentas.service';
+import { LoginService } from './../services/service/login.service';
 
 
 @Component({
@@ -27,11 +27,12 @@ export class PrestamoSimuladorComponent implements OnInit {
 
   unUsuario: Usuario;
   identificadorUsuario: MenuItem[];
-  
-  constructor(private simuladorService: SimuladorService,private cuentasService: CuentasService) { }
+  curretUser:any;
+  constructor(private cuentasService: CuentasService, private auth:LoginService) { }
 
-  ngOnInit() {  
-    this.obtenerUnUsuario();
+  ngOnInit() { 
+    this.curretUser = this.auth.getCurrentUser();
+    this.obtenerUnUsuario(); 
     this.cols2 = [
       { field: 'period', header: 'Periodo' },
       { field: 'pay', header: 'Cuota' },
@@ -43,7 +44,6 @@ export class PrestamoSimuladorComponent implements OnInit {
 
   obtenerSimulador() {    
     this.cuentas1=this.getAmortization(this.can, this.per, this.imp);
-    //this.cuentas1=this.getAmortization(5000, 423.47, 12, 0.03);
   }
 
   updateInfo(){
@@ -95,7 +95,7 @@ export class PrestamoSimuladorComponent implements OnInit {
   }
 
   obtenerUnUsuario() {
-    this.cuentasService.getUnUsuario().subscribe((data) => {
+    this.cuentasService.getUnUsuario(this.curretUser).subscribe((data) => {
       console.log("usr",data);
       this.identificadorUsuario = [];
       

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
-import { CuentasService } from '../pos-consolidada/service/cuentas.service';
+import { CuentasService } from '../Services/service/cuentas.service';
 import { Usuario } from './domain/usuario';
 import { Cuenta } from './domain/cuenta';
 import { Prestamo } from './domain/prestamo';
@@ -55,7 +55,7 @@ export class TransfOtrosComponent implements OnInit {
 
   obtenerListaCuentas() {
     
-    this.cuentasService.getListaCuentas().subscribe((data) => {
+    this.cuentasService.getListaCuentas("100445689").subscribe((data) => {
       console.log("lista Cuentas",data);
       this.cuentas1 = data;
     });
@@ -63,14 +63,14 @@ export class TransfOtrosComponent implements OnInit {
   
   obtenerListaPrestamos() {
     
-    this.cuentasService.getListaPrestamos().subscribe((data) => {
+    this.cuentasService.getListaPrestamos("100445689").subscribe((data) => {
       console.log("lista Prestamos",data);
       this.prestamos1 = data;
     });
   }
 
   obtenerUnUsuario() {
-    this.cuentasService.getUnUsuario().subscribe((data) => {
+    this.cuentasService.getUnUsuario("100445689").subscribe((data) => {
       console.log("usr",data);
       this.identificadorUsuario = [];
       

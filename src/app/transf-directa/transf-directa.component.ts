@@ -1,14 +1,13 @@
-import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
-import { CuentasService } from '../transf-directa/service/cuentas.service';
-import { Usuario } from './domain/usuario';
-import { Cuenta } from './domain/cuenta';
-import { Prestamo } from './domain/prestamo';
+import { CuentasService } from '../Services/service/cuentas.service';
+import { Usuario } from '../Services/domain/usuario';
+import { Cuenta } from '../Services/domain/cuenta';
+import { Prestamo } from '../Services/domain/prestamo';
 import { SelectItem } from 'primeng/api';
-import { MessagesModule } from 'primeng/messages';
 import { Message } from 'primeng/components/common/api';
+import { LoginService } from './../services/service/login.service';
 
 
 @Component({
@@ -44,8 +43,11 @@ export class TransfDirectaComponent implements OnInit {
   transfer: any = [];
   msgs: Message[] = [];
 
+  sapo: any = true;
+  curretUser:any;
 
-  constructor(private cuentasService: CuentasService) {
+
+  constructor(private cuentasService: CuentasService, private auth:LoginService) {
     this.saldo = [
       { label: 'Audi', value: 'Audi' },
       { label: 'BMW', value: 'BMW' },
@@ -61,14 +63,14 @@ export class TransfDirectaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curretUser = this.auth.getCurrentUser();
     this.obtenerListaCuentas();
-    this.obtenerListaPrestamos();
     this.obtenerUnUsuario();
   }
 
 
   obtenerListaCuentas() {
-    this.cuentasService.getObtCuentas().subscribe((data) => {
+    this.cuentasService.getObtCuentas(this.curretUser).subscribe((data) => {
       this.cta_origen = data;
       this.saldo.splice(this.cta_origen.length, this.saldo.length);
       for (let i = 0; i < this.cta_origen.length; i++) {
@@ -78,29 +80,31 @@ export class TransfDirectaComponent implements OnInit {
       }
     });
   }
-  obtenerListaPrestamos() {
-
-    this.cuentasService.getListaPrestamos().subscribe((data) => {
-      console.log("lista Prestamos", data);
-      this.prestamos1 = data;
-    });
-  }
 
   btnAceptar() {
+    this.msgs = [];
+    this.cuentasService.getTransferencia(this.cta_org, this.cta_dest, this.monto).subscribe((data) => {
+      var aux = data.status;
+      if (aux == 201) {
+        this.msgs = [];
+        this.msgs.push({ severity: 'success', summary: 'Exito', detail: 'Transferencia realizada correctamente' });
+        this.monto = null;
+        this.cta_dest = null;
+        this.cta_org = null;
+        this.cta_origen = null;
+      }
+    },
+      error => {
+        this.msgs = [];
+        this.msgs.push({ severity: 'error', summary: 'Error', detail: 'Transferencia no realizada, verifique la información' });
 
-      this.cuentasService.getTransferencia(this.cta_org, this.cta_dest, this.monto).subscribe((data) => {        
-        var aux = data.status;
-        if (aux == 201) {
-          this.msgs = [];
-          this.msgs.push({ severity: 'success', summary: 'Exito', detail: 'Transferencia realizada correctamente' });
-        }
-        console.log(aux);
-      });
+      }
+    );
 
   }
 
   obtenerUnUsuario() {
-    this.cuentasService.getUnUsuario().subscribe((data) => {
+    this.cuentasService.getUnUsuario(this.curretUser).subscribe((data) => {
       console.log("usr", data);
       this.identificadorUsuario = [];
       this.unUsuario = data;

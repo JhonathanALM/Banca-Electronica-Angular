@@ -1,4 +1,4 @@
-import { LoginService } from './login/service/login.service';
+import { LoginService } from './services/service/login.service';
 import { Component } from '@angular/core';
 import { AppComponent} from './app.component';
 import { TemplateComponent} from './template/template.component';

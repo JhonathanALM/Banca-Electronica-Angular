@@ -1,10 +1,11 @@
+import { LoginService } from './../services/service/login.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
-import { CuentasService } from '../pos-consolidada/service/cuentas.service';
-import { Usuario } from './domain/usuario';
-import { Cuenta } from './domain/cuenta';
-import { Prestamo } from './domain/prestamo';
+import { CuentasService } from '../Services/service/cuentas.service';
+import { Usuario } from '../Services/domain/usuario';
+import { Cuenta } from '../Services/domain/cuenta';
+import { Prestamo } from '../Services/domain/prestamo';
 
 
 
@@ -29,13 +30,15 @@ export class PosConsolidadaComponent implements OnInit {
   unUsuario: Usuario;
   identificadorUsuario: MenuItem[];
   miArray = [];
-
-  constructor(private cuentasService: CuentasService) { }
-
+  curretUser:any;
+  constructor(private cuentasService: CuentasService, private auth:LoginService) { }
   ngOnInit() {
+    this.curretUser = this.auth.getCurrentUser();
+    console.log("curr::::",this.curretUser);
     this.obtenerListaCuentas();
     this.obtenerListaPrestamos();
     this.obtenerUnUsuario();
+
     this.cols = [
       { field: 'cuenta', header: 'Cuenta' },
       { field: 'estado', header: 'Estado' },
@@ -50,38 +53,36 @@ export class PosConsolidadaComponent implements OnInit {
       { field: 'fecha', header: 'Fecha' },
       { field: 'saldo', header: 'Saldo' }
     ];
-    
+
   }
 
 
   obtenerListaCuentas() {
-    
-    this.cuentasService.getListaCuentas().subscribe((data) => {
-      console.log("lista Cuentas",data);
+    this.cuentasService.getListaCuentas(this.curretUser).subscribe((data) => {
+      console.log("lista Cuentas", data);
       this.cuentas1 = data;
     });
   }
-  
+
   obtenerListaPrestamos() {
-    
-    this.cuentasService.getListaPrestamos().subscribe((data) => {
-      console.log("Esta es la lista Prestamos",data);
-      this.prestamos1=[];
-      this.prestamos1.push(data) ;
+
+    this.cuentasService.getListaPrestamos(this.curretUser).subscribe((data) => {
+      console.log("Esta es la lista Prestamos", data);
+      this.prestamos1 = [];
+      this.prestamos1.push(data);
     });
   }
 
   obtenerUnUsuario() {
-    this.cuentasService.getUnUsuario().subscribe((data) => {
-      console.log("usr",data);
+    this.cuentasService.getUnUsuario(this.curretUser).subscribe((data) => {
+      console.log("usr", data);
       this.identificadorUsuario = [];
-      
       this.unUsuario = data;
       this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
   }
 
-  updateInfo(){
+  updateInfo() {
     console.log("click");
     this.obtenerListaCuentas();
     this.obtenerListaPrestamos();
