@@ -63,10 +63,9 @@ export class TransfOtrosComponent implements OnInit {
       { label: 'Volvo', value: 'Volvo' },
     ];
     this.bancos = [
-      { label: 'PACIFICO', value: 'PACIFICO' },
-      { label: 'PICHINCHA', value: 'PICHINCHA' },
-      { label: 'INTERNACIONAL', value: 'INTERNACIONAL' },
-      { label: 'MUTUALISTA', value: 'MUTUALISTA' }
+      { label: 'BANCO BOLIVARIANO', value: '1' },
+      { label: 'BANCO PICHINCHA', value: '2' },
+      { label: 'BANCO INTERNACIONAL', value: '3' }
     ]
     this.tipos = [
       { label: 'CEDULA', value: 'CEDULA' },

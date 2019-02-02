@@ -19,7 +19,7 @@
         "changeOrigin":true
     },
     "/user/*": {
-        "target": "http://40.121.87.240:2300",
+        "target": "http://40.121.87.240:8080",
         "secure": false,
         "changeOrigin": true
     }
