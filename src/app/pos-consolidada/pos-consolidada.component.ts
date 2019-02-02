@@ -88,4 +88,9 @@ export class PosConsolidadaComponent implements OnInit {
     this.obtenerListaPrestamos();
   }
 
+  toDate(_miString){
+    let patron = "[UTC]";
+    let nuevoValor    = "";
+    return _miString.replace(patron, nuevoValor);
+  }
 }
