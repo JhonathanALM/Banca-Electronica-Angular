@@ -8,6 +8,7 @@ import { Prestamo } from '../Services/domain/prestamo';
 import { SelectItem } from 'primeng/api';
 import { Message } from 'primeng/components/common/api';
 import { LoginService } from './../services/service/login.service';
+import { CurrencyIndex } from '@angular/common/src/i18n/locale_data';
 
 
 @Component({
@@ -45,6 +46,9 @@ export class TransfDirectaComponent implements OnInit {
 
   sapo: any = true;
   curretUser:any;
+  permiteTranferir: boolean = false;
+  display: boolean = false;
+
 
 
   constructor(private cuentasService: CuentasService, private auth:LoginService) {
@@ -66,20 +70,6 @@ export class TransfDirectaComponent implements OnInit {
     this.curretUser = this.auth.getCurrentUser();
     this.obtenerListaCuentas();
     this.obtenerUnUsuario();
-    this.cols = [
-      { field: 'cuenta', header: 'Cuenta' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'saldo', header: 'Saldo' },
-      { field: 'tipo', header: 'Tipo' }
-    ];
-    this.cols2 = [
-      { field: 'numero', header: 'Número' },
-      { field: 'tipo', header: 'Tipo' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'monto', header: 'Monto' },
-      { field: 'fecha', header: 'Fecha' },
-      { field: 'saldo', header: 'Saldo' }
-    ];
   }
 
 
@@ -125,6 +115,17 @@ export class TransfDirectaComponent implements OnInit {
       this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
   }
+  estado() {
+    var valor = Number(this.cta_dest);
+    var valor2 = Number(this.monto);
+    this.permiteTranferir=(valor<= this.cta_dest && valor2<= this.monto)?true:false;
+  }
+ 
+  mostrar(event: Event) {
+    this.display = true;
+    event.preventDefault();
+  }
+  
 
 
 }

@@ -25,6 +25,9 @@ export class PrestamoSimuladorComponent implements OnInit {
   imp: any = "";
   per: any = "";
 
+  permiteTranferir: boolean = false;
+  display: boolean = false;
+
   unUsuario: Usuario;
   identificadorUsuario: MenuItem[];
   curretUser:any;
@@ -103,6 +106,22 @@ export class PrestamoSimuladorComponent implements OnInit {
       this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
   }
+  
+  estado() {
+    var valor = Number(this.per);
+    var valor2 = Number(this.can);
+    var valor3=Number(this.imp);
+    this.permiteTranferir=(valor<= this.per && valor2<= this.can && valor3<= this.imp )?true:false;
+  }
+ 
+
+  mostrar(event: Event) {
+    this.display = true;
+    event.preventDefault();
+  }
+
+
+
 }
 
 

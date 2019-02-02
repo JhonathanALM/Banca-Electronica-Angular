@@ -29,7 +29,7 @@ export class TransfOtrosComponent implements OnInit {
   cta_origen: any = [];
   banco_destino: any = [];
   tipo_identificacion: any = [];
-  
+
   saldo: SelectItem[];
   bancos: SelectItem[];
   tipos: SelectItem[];
@@ -40,13 +40,16 @@ export class TransfOtrosComponent implements OnInit {
 
   cta_org: any = "";
   cta_dest: any = "";
-  banc_:any = "";
+  banc_: any = "";
   monto: any = "";
+  permiteTranferir: boolean = false;
+  display: boolean = false;
+
 
   unUsuario: Usuario;
   identificadorUsuario: MenuItem[];
-  curretUser:any;
-  constructor(private cuentasService: CuentasService, private auth:LoginService) { 
+  curretUser: any;
+  constructor(private cuentasService: CuentasService, private auth: LoginService) {
     this.saldo = [
       { label: 'Audi', value: 'Audi' },
       { label: 'BMW', value: 'BMW' },
@@ -59,15 +62,15 @@ export class TransfOtrosComponent implements OnInit {
       { label: 'VW', value: 'VW' },
       { label: 'Volvo', value: 'Volvo' },
     ];
-    this.bancos=[
-      {label: 'PACIFICO', value: 'PACIFICO'},
-      {label: 'PICHINCHA', value: 'PICHINCHA'},
-      {label: 'INTERNACIONAL', value: 'INTERNACIONAL'},
-      {label: 'MUTUALISTA', value: 'MUTUALISTA'}
+    this.bancos = [
+      { label: 'PACIFICO', value: 'PACIFICO' },
+      { label: 'PICHINCHA', value: 'PICHINCHA' },
+      { label: 'INTERNACIONAL', value: 'INTERNACIONAL' },
+      { label: 'MUTUALISTA', value: 'MUTUALISTA' }
     ]
-    this.tipos=[
-      {label: 'CEDULA', value: 'CEDULA'},
-      {label: 'PASAPORTE', value: 'PASAPORTE'}
+    this.tipos = [
+      { label: 'CEDULA', value: 'CEDULA' },
+      { label: 'PASAPORTE', value: 'PASAPORTE' }
     ]
   }
 
@@ -75,7 +78,7 @@ export class TransfOtrosComponent implements OnInit {
     this.curretUser = this.auth.getCurrentUser();
     this.obtenerListaCuentas();
     this.obtenerUnUsuario();
-    
+
   }
 
 
@@ -93,7 +96,7 @@ export class TransfOtrosComponent implements OnInit {
   btnAceptar() {
     console.log("boton presionado?");
     this.msgs = [];
-    this.cuentasService.getTransferenciaExt(this.cta_org, this.cta_dest, this.monto,this.banco_destino).subscribe((data) => {
+    this.cuentasService.getTransferenciaExt(this.cta_org, this.cta_dest, this.monto, this.banco_destino).subscribe((data) => {
       var aux = data.status;
       if (aux == 201) {
         this.msgs = [];
@@ -112,15 +115,26 @@ export class TransfOtrosComponent implements OnInit {
     );
 
   }
-  
+
   obtenerUnUsuario() {
     this.cuentasService.getUnUsuario(this.curretUser).subscribe((data) => {
-      console.log("usr",data);
+      console.log("usr", data);
       this.identificadorUsuario = [];
-      
+
       this.unUsuario = data;
       this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
+  }
+
+  estado() {
+    var monto = Number(this.monto);
+    var numc = Number(this.cta_dest);
+    this.permiteTranferir = (monto <= this.monto && numc <= this.cta_dest) ? true : false;
+  }
+
+  mostrar(event: Event) {
+    this.display = true;
+    event.preventDefault();
   }
 
 }

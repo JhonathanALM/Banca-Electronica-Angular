@@ -1,4 +1,4 @@
-import { Component, OnInit,PipeTransform } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { HistorialService } from '../Services/service/historial.service';
 import { Historial } from '../Services/domain/historial';
 import { CuentasService } from 'src/app/Services/service/cuentas.service';
@@ -6,36 +6,36 @@ import { Cuenta } from 'src/app/Services/domain/cuenta';
 import { FormatoFechaPipe } from '../util/formato-fecha.pipe';
 import { LoginService } from './../services/service/login.service';
 
- @Component({
+@Component({
   selector: 'app-transf-historial',
   templateUrl: './transf-historial.component.html',
   styleUrls: ['./transf-historial.component.css'],
-  providers:[FormatoFechaPipe]
+  providers: [FormatoFechaPipe]
 })
 export class TransfHistorialComponent implements OnInit {
 
-   transferencias: Historial[];
+  transferencias: Historial[];
   cuentas: Cuenta[];
 
-   transferenciaSeleccionada: Historial;
+  transferenciaSeleccionada: Historial;
   cuentaSeleccionada: Cuenta;
 
-   cols: any[];
+  cols: any[];
 
-   fechaHasta: Date;
-  fechaDesde:Date;
-  numCuenta:String;
+  fechaHasta: Date;
+  fechaDesde: Date;
+  numCuenta: String;
 
-   //nCedula:String;
-  nCedulaKYC:String;
-  curretUser:any;
+  //nCedula:String;
+  nCedulaKYC: String;
+  curretUser: any;
 
 
-   constructor(private historialService: HistorialService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe, private auth:LoginService) { }
+  constructor(private historialService: HistorialService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe, private auth: LoginService) { }
 
-   ngOnInit() {
+  ngOnInit() {
     this.curretUser = this.auth.getCurrentUser();
-    this.nCedulaKYC = "1004456891";
+   this.nCedulaKYC = "1004456891";
 
     this.puedoBuscar();
     this.obtenerListaCuentas();
@@ -49,19 +49,19 @@ export class TransfHistorialComponent implements OnInit {
       { field: 'valor', header: 'Valor' }
     ];
 
-   }
+  }
 
-   obtenerListaCuentas() {
+  obtenerListaCuentas() {
 
-     this.cuentasService.getListaCuentas(this.curretUser).subscribe((data) => {
-      console.log("lista Cuentas",data);
+    this.cuentasService.getListaCuentas(this.curretUser).subscribe((data) => {
+      console.log("lista Cuentas", data);
       this.cuentas = data;
       this.cuentaSeleccionada = this.cuentas[0];
     });
   }
   obtenerHistorial() {
 
-     let fi = this.formatoFechaPipe.transform(this.fechaDesde.toDateString());
+    let fi = this.formatoFechaPipe.transform(this.fechaDesde.toDateString());
     let ff = this.formatoFechaPipe.transform(this.fechaHasta.toDateString());
     /* this.numCuenta = this.cuentaSeleccionada.cuenta;
     
@@ -70,19 +70,19 @@ export class TransfHistorialComponent implements OnInit {
     console.log(ff);
     /* console.log(nc); */
     this.historialService.getHistorialTransferencias(fi, ff, this.cuentaSeleccionada.cuenta).subscribe((data) => {
-      console.log("historial",data);
+      console.log("historial", data);
       this.transferencias = data;
     });
   }
 
-   puedoBuscar(){
-    if(this.fechaDesde != null && this.fechaHasta != null){
+  puedoBuscar() {
+    if (this.fechaDesde != null && this.fechaHasta != null) {
       console.log(false);
       return false;
-    }else{
+    } else {
       console.log(true);
       return true;
     }
   }
 
- }
+}

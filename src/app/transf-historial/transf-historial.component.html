@@ -22,8 +22,9 @@
         <div class="ui-g-12 ui-md-8">
             <p-calendar id="pc-fecha-hasta" [(ngModel)]="fechaHasta" [showIcon]="true" placeholder="dd/MM/yyyy"></p-calendar>
         </div>
-
-        <div class="ui-g-12">
+        <div class="ui-g-12 ui-md-4">
+        </div>
+        <div class="ui-g-12 ui-md-8">
             <button type="button" icon="fa fa-search" label="Buscar" pButton (click)="obtenerHistorial($event)"></button>
         </div>
         <br />
@@ -34,11 +35,11 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th >Documento</th>
+                    <th>Documento</th>
                     <th>Cuenta de Destino</th>
                     <th>Tipo</th>
                     <th>Concepto</th>
-                    <th >Fecha</th>
+                    <th>Fecha</th>
                     <th>Saldo</th>
                     <th>Valor</th>
                 </tr>

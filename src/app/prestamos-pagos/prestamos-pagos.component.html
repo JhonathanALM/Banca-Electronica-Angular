@@ -39,13 +39,10 @@
                 <div class="ui-g-8 ui-sm-6">
                   <b [ngClass]="(pago.estado=='Pendiente')?'badge-pendiente':'badge-pagado'">{{pago.estado}}</b>
                 </div>
-
-
               </div>
             </div>
             <div class="ui-g-12 ui-md-6 search-icon" *ngIf="(pago.estado=='Pendiente')? true:false">
               <div class="ui-g">
-
                 <div class="ui-g-4 ui-sm-6">Valor a Pagar: </div>
                 <div class="ui-g-8 ui-sm-6 text-derecha">
                   <input type="text" pInputText pKeyFilter="pnum" [(ngModel)]="valorPagar" (keyup)="estadoPago($event)">
@@ -55,7 +52,6 @@
                   <p-button label="Realizar Pago" icon="fa fa-money" (onClick)="mostrarDetallePago($event, pago)"
                     [disabled]="!permitePago"></p-button>
                 </div>
-
               </div>
             </div>
 
