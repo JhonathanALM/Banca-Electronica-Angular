@@ -31,28 +31,32 @@
       </p-table>
 
       <br />
-      <p-table [columns]="cols2" [value]="prestamos1" selectionMode="single" dataKey="id" [(selection)]="prestamoSeleccionado"
-         [responsive]="true">
-        <ng-template pTemplate="caption">
-          LISTA DE PRÉSTAMOS
+      <p-table [value]="prestamos1" selectionMode="single" dataKey="id" [(selection)]="prestamoSeleccionado"
+      [paginator]="true" [rows]="10" [responsive]="true" paginatorPosition="both">
+          <ng-template pTemplate="caption">
+            LISTA DE PRÉSTAMOS
+            </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th >Número</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Monto</th>
+                <th >Fecha</th>
+                <th>Saldo</th>
+            </tr>
         </ng-template>
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-              {{col.header}}
-              <p-sortIcon [field]="col.field"></p-sortIcon>
-            </th>
-          </tr>
+        <ng-template pTemplate="body" let-hitem>
+            <tr>
+                <td>{{hitem.numero}}</td>
+                <td>{{hitem.tipo}}</td>
+                <td>{{hitem.estado == 'act'?'Activo':'Pasivo'}}</td>
+                <td>{{hitem.monto}}</td>
+                <td>{{toDate(hitem.fecha) | formatoFecha}}</td>
+                <td>{{hitem.saldo}}</td>
+            </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-          <tr [pSelectableRow]="rowData">
-            <td *ngFor="let col of columns">
-              <span class="ui-column-title">{{col.header}}</span>
-              {{rowData[col.field]}}
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+    </p-table>
 
       <br />
       <div class="ui-g-12 ui-md-5"></div>
