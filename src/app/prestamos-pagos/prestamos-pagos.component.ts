@@ -54,15 +54,21 @@ export class PrestamosPagosComponent implements OnInit {
     event.preventDefault();
   }
 
-  realizarPago() {
-    this.display = false;
+  realizarPago(){
     this.requestPago = {
       id: this.unPago.numCuota,
       valorPagado: Number(this.valorPagar)
     }
     console.log("realizando pago... ", this.requestPago);
-    //this.pagosService.sendPrestamo(this.requestPago);
-    this.obtenerInfoPago();
+    this.pagosService.sendPrestamo(this.requestPago).subscribe((data)=>{
+      console.log("pago realizado...",data);
+      this.obtenerInfoPago();  
+      this.display = false;  
+    }, error =>{
+      console.log("ocurrio error",error);
+      this.display = false;  
+    });
+    
   }
 
   toNumber(_valor){
