@@ -6,9 +6,10 @@ import { Message } from 'primeng/components/common/api';
 import { map, catchError, tap } from 'rxjs/operators';
 
 const endpointCuentas = '/Modulo-Cuentas-Pll-web/api/cuenta/';
-const endpointPrestamos = '/Prestamo-web/api/verPrestamo/1';
+const endpointPrestamos = '/Prestamo-web/api/verPrestamo/';
 const endpointUsuarioKYC = '/KYC-mongo-rest-web/api/cliente/cedula/';
 const endpointObtTransfe = '/Modulo-Cuentas-Pll-web/api/transferencia/directa/';
+const endpointObtTransfeExt = '/Modulo-Cuentas-Pll-web/api/transferencia/externa/';
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +35,25 @@ export class CuentasService {
   }
 
   getListaPrestamos(user:string): Observable<any> {
-    return this.http.get(endpointPrestamos).pipe(
+    return this.http.get(endpointPrestamos+ user).pipe(
       map(this.extractData));
   }
   getTransferencia(origen: String, destino: String, monto: String) {
 
     return this.http.get(endpointObtTransfe + origen + "&" + destino + "&" + monto, { observe: 'response' }).pipe(
+      tap(
+        resp => {
+          console.log("CORRECTITO", resp.headers.get('ReturnStatus'));
+        }, err => {
+          console.log("ERRORSITO", err);
+        }
+      )
+    );
+
+  }
+  getTransferenciaExt(origen: String, destino: String, monto: String, banco: String) {
+
+    return this.http.get(endpointObtTransfeExt + origen + "&" + destino + "&" + monto+ "&" + banco, { observe: 'response' }).pipe(
       tap(
         resp => {
           console.log("CORRECTITO", resp.headers.get('ReturnStatus'));

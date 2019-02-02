@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
 import { CuentasService } from '../Services/service/cuentas.service';
-import { Usuario } from './domain/usuario';
-import { Cuenta } from './domain/cuenta';
-import { Prestamo } from './domain/prestamo';
+import { Usuario } from '../Services/domain/usuario';
+import { Cuenta } from '../Services/domain/cuenta';
+import { Prestamo } from '../Services/domain/prestamo';
+import { LoginService } from './../services/service/login.service';
+import { SelectItem } from 'primeng/api';
+import { Message } from 'primeng/components/common/api';
 
 
 
@@ -23,66 +26,101 @@ export class TransfOtrosComponent implements OnInit {
   cols: any[];
   cols2: any[];
 
+  cta_origen: any = [];
+  banco_destino: any = [];
+  tipo_identificacion: any = [];
+  
+  saldo: SelectItem[];
+  bancos: SelectItem[];
+  tipos: SelectItem[];
+
+  msgs: Message[] = [];
   cuentaSeleccionada: Cuenta;
   prestamoSeleccionado: Cuenta;
 
+  cta_org: any = "";
+  cta_dest: any = "";
+  banc_:any = "";
+  monto: any = "";
+
   unUsuario: Usuario;
   identificadorUsuario: MenuItem[];
-
-  constructor(private cuentasService: CuentasService) { }
+  curretUser:any;
+  constructor(private cuentasService: CuentasService, private auth:LoginService) { 
+    this.saldo = [
+      { label: 'Audi', value: 'Audi' },
+      { label: 'BMW', value: 'BMW' },
+      { label: 'Fiat', value: 'Fiat' },
+      { label: 'Ford', value: 'Ford' },
+      { label: 'Honda', value: 'Honda' },
+      { label: 'Jaguar', value: 'Jaguar' },
+      { label: 'Mercedes', value: 'Mercedes' },
+      { label: 'Renault', value: 'Renault' },
+      { label: 'VW', value: 'VW' },
+      { label: 'Volvo', value: 'Volvo' },
+    ];
+    this.bancos=[
+      {label: 'PACIFICO', value: 'PACIFICO'},
+      {label: 'PICHINCHA', value: 'PICHINCHA'},
+      {label: 'INTERNACIONAL', value: 'INTERNACIONAL'},
+      {label: 'MUTUALISTA', value: 'MUTUALISTA'}
+    ]
+    this.tipos=[
+      {label: 'CEDULA', value: 'CEDULA'},
+      {label: 'PASAPORTE', value: 'PASAPORTE'}
+    ]
+  }
 
   ngOnInit() {
+    this.curretUser = this.auth.getCurrentUser();
     this.obtenerListaCuentas();
-    this.obtenerListaPrestamos();
     this.obtenerUnUsuario();
-    this.cols = [
-      { field: 'cuenta', header: 'Cuenta' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'saldo', header: 'Saldo' },
-      { field: 'tipo', header: 'Tipo' }
-    ];
-    this.cols2 = [
-      { field: 'numero', header: 'Número' },
-      { field: 'tipo', header: 'Tipo' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'monto', header: 'Monto' },
-      { field: 'fecha', header: 'Fecha' },
-      { field: 'saldo', header: 'Saldo' }
-    ];
     
   }
 
 
   obtenerListaCuentas() {
-    
-    this.cuentasService.getListaCuentas("100445689").subscribe((data) => {
-      console.log("lista Cuentas",data);
-      this.cuentas1 = data;
+    this.cuentasService.getObtCuentas(this.curretUser).subscribe((data) => {
+      this.cta_origen = data;
+      this.saldo.splice(this.cta_origen.length, this.saldo.length);
+      for (let i = 0; i < this.cta_origen.length; i++) {
+        //CUENTA DE ORIGEN
+        this.saldo[i].label = this.cta_origen[i].cuenta;
+        this.saldo[i].value = this.cta_origen[i].cuenta;
+      }
     });
+  }
+  btnAceptar() {
+    console.log("boton presionado?");
+    this.msgs = [];
+    this.cuentasService.getTransferenciaExt(this.cta_org, this.cta_dest, this.monto,this.banco_destino).subscribe((data) => {
+      var aux = data.status;
+      if (aux == 201) {
+        this.msgs = [];
+        this.msgs.push({ severity: 'success', summary: 'Exito', detail: 'Transferencia realizada correctamente' });
+        this.monto = null;
+        this.cta_dest = null;
+        this.cta_org = null;
+        this.cta_origen = null;
+      }
+    },
+      error => {
+        this.msgs = [];
+        this.msgs.push({ severity: 'error', summary: 'Error', detail: 'Transferencia no realizada, verifique la información' });
+
+      }
+    );
+
   }
   
-  obtenerListaPrestamos() {
-    
-    this.cuentasService.getListaPrestamos("100445689").subscribe((data) => {
-      console.log("lista Prestamos",data);
-      this.prestamos1 = data;
-    });
-  }
-
   obtenerUnUsuario() {
-    this.cuentasService.getUnUsuario("100445689").subscribe((data) => {
+    this.cuentasService.getUnUsuario(this.curretUser).subscribe((data) => {
       console.log("usr",data);
       this.identificadorUsuario = [];
       
       this.unUsuario = data;
       this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
-  }
-
-  updateInfo(){
-    console.log("click");
-    this.obtenerListaCuentas();
-    this.obtenerListaPrestamos();
   }
 
 }

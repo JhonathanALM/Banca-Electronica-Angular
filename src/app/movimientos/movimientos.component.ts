@@ -57,7 +57,6 @@ export class MovimientoComponent implements OnInit {
   ngOnInit() {
     this.curretUser = this.auth.getCurrentUser();
     console.log("curr2:::", this.curretUser);
-    this.obtenerUnUsuario();
 
 
     this.cols = [
@@ -145,14 +144,7 @@ export class MovimientoComponent implements OnInit {
     );
   }
 
-  obtenerUnUsuario() {
-    this.movimientoService.getUnUsuario(this.curretUser).subscribe((data) => {
-      console.log("usr", data);
-      this.identificadorUsuario = [];
-      this.unUsuario = data;
-      this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
-    });
-  }
+
 
 
 }

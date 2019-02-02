@@ -66,6 +66,20 @@ export class TransfDirectaComponent implements OnInit {
     this.curretUser = this.auth.getCurrentUser();
     this.obtenerListaCuentas();
     this.obtenerUnUsuario();
+    this.cols = [
+      { field: 'cuenta', header: 'Cuenta' },
+      { field: 'estado', header: 'Estado' },
+      { field: 'saldo', header: 'Saldo' },
+      { field: 'tipo', header: 'Tipo' }
+    ];
+    this.cols2 = [
+      { field: 'numero', header: 'Número' },
+      { field: 'tipo', header: 'Tipo' },
+      { field: 'estado', header: 'Estado' },
+      { field: 'monto', header: 'Monto' },
+      { field: 'fecha', header: 'Fecha' },
+      { field: 'saldo', header: 'Saldo' }
+    ];
   }
 
 
