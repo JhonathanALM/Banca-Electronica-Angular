@@ -1,10 +1,10 @@
 import { LoginService } from './../services/service/login.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, SelectItem } from 'primeng/primeng';
-import { CuentaService } from './service/cuenta.service';
-import { Usuario } from './domain/usuario';
-import { Cuenta } from './domain/cuenta';
-import { MovimientoService } from './service/movimiento.service';
+import { CuentaService } from '../Services/Service/cuenta.service';
+import { Usuario } from '../Services/domain/usuario';
+import { Cuenta } from '../Services/domain/cuenta';
+import { MovimientoService } from '../Services/Service/movimiento.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe, formatDate } from '@angular/common';
 
@@ -115,6 +115,10 @@ export class MovimientoComponent implements OnInit {
         console.log(this.fecha2.getDate() + '-' + (this.fecha2.getMonth() + 1) + '-' + this.fecha2.getFullYear());
 
         this.movimientos = data;
+
+        console.log(data);
+        
+        
 
 
       },
