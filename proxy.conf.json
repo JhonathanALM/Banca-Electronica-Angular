@@ -1,4 +1,9 @@
 {
+    "/ServicioCuenta/api/*":{
+        "target":"http://40.121.87.240:8086",
+        "secure":false,
+        "changeOrigin":true
+    },
     "/Prestamo-web/api/*":{
         "target":"http://13.82.133.134:8080",
         "secure":false,
@@ -14,8 +19,10 @@
         "changeOrigin":true
     },
     "/user/*": {
-        "target": "http://127.0.0.1:2300",
+        "target": "http://40.121.87.240:2300",
         "secure": false,
         "changeOrigin": true
     }
-}
+   
+  }
+

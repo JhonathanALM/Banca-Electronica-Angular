@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -72,6 +74,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import { DatePipe } from '@angular/common'
 
 import { AppComponent } from './app.component';
 import { AppMenuComponent, AppSubMenuComponent } from './app.menu.component';
@@ -79,7 +82,7 @@ import { AppTopBarComponent } from './app.topbar.component';
 import { AppFooterComponent } from './app.footer.component';
 
 import { PosConsolidadaComponent } from './pos-consolidada/pos-consolidada.component';
-import { MovimientosComponent } from './movimientos/movimientos.component';
+import { MovimientoComponent } from './movimientos/movimientos.component';
 import { PrestamosSoliComponent } from './prestamos-solicitud/prestamos-soli.component';
 import { PrestamosPagosComponent } from './prestamos-pagos/prestamos-pagos.component';
 import { PrestamoSimuladorComponent } from './prestamos-simulador/prestamo-simu.component';
@@ -88,8 +91,7 @@ import { TransfHistorialComponent } from './transf-historial/transf-historial.co
 import { TransfOtrosComponent } from './transf-otros/transf-otros.component';
 import { TemplateComponent } from './template/template.component';
 import { LoginComponent } from './login/login.component';
-
-
+import{MovimientoService} from './movimientos/service/movimiento.service';
 import { CuentasService } from './Services/service/cuentas.service';
 import { FormatoFechaPipe } from './util/formato-fecha.pipe';
 
@@ -97,6 +99,7 @@ import { FormatoFechaPipe } from './util/formato-fecha.pipe';
     imports: [
         BrowserModule,
         FormsModule,
+        HttpModule,
         AppRoutes,
         HttpClientModule,
         BrowserAnimationsModule,
@@ -174,7 +177,7 @@ import { FormatoFechaPipe } from './util/formato-fecha.pipe';
         AppTopBarComponent,
         AppFooterComponent,
         PosConsolidadaComponent,
-        MovimientosComponent,
+        MovimientoComponent,
         PrestamosSoliComponent,
         PrestamosPagosComponent,
         PrestamoSimuladorComponent,
@@ -187,7 +190,7 @@ import { FormatoFechaPipe } from './util/formato-fecha.pipe';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        /*CarService, CountryService, EventService, NodeService, */CuentasService
+        /*CarService, CountryService, EventService, NodeService, */CuentasService,MovimientoService,DatePipe
     ],
     bootstrap: [AppComponent]
 })

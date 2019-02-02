@@ -9,34 +9,42 @@
             <div class="card card-w-title">
                 <h1></h1>
 
-                <div class="card no-margin">
+               <!-- <div class="card no-margin">-->
                     <h1></h1>
                     <div class="ui-g form-group">
                         <div class="ui-g-12 ui-md-6">
 
                             <div class="ui-g-12 ui-md-4">
+                                <label for="dropdown">Cuenta</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-8">
+                                <!--Aqui hay q cambiar-->
+                                <p-dropdown id="productos" [options]="cuenta_ser" [(ngModel)]="cuenta_sel" [autoWidth]="false" optionLabel="cuenta" ></p-dropdown>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
                                 <label for="calendar">Desde</label>
                             </div>
                             <div class="ui-g-12 ui-md-8">
-                                <p-calendar id="calendar"></p-calendar>
+                                <p-calendar id="calendar"  [(ngModel)]="fecha1" [showIcon]="true"></p-calendar>
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
                                 <label for="calendar">Hasta</label>
                             </div>
                             <div class="ui-g-12 ui-md-8">
-                                <p-calendar id="calendar"></p-calendar>
+                                <p-calendar id="calendar"  [(ngModel)]="fecha2" [showIcon]="true"></p-calendar>
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
                             </div>
                             <div class="ui-g-12 ui-md-8">
-                                <button pButton type="button" label="Aceptar" icon="fa fa-check-square"></button>
+                                <button pButton type="button" label="Aceptar" icon="fa fa-check-square" (click)="btnAceptar()"></button>
                             </div>
                         </div>
                     </div>
 
-                    <p-table [columns]="cols" [value]="cuentas1" selectionMode="single" dataKey="cuenta" [(selection)]="cuentaSeleccionada"
+                    <p-table [columns]="cols" [value]="movimientos" selectionMode="single" dataKey="documento"
                         [paginator]="true" [rows]="10" [responsive]="true" paginatorPosition="both">
                         <ng-template pTemplate="caption">
                             LISTA DE MOVIMIENTOS
@@ -81,7 +89,7 @@
                         </p-footer>
                     </p-dialog>
 
-                </div>
+                <!--</div>-->
                 <br />
 
             </div>
