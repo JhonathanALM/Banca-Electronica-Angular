@@ -5,7 +5,8 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Pago } from '../domain/pago';
 import { ReqPago } from '../domain/reqpago';
 
-const endpointPrestamo = '/Prestamo-web/api/cuotaAmortizacion/'; 
+const endpointPrestamo = '/Prestamo-web/api/cuotaAmortizacion/';
+const endpointPago = '/Prestamo-web/api/pago/'; 
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,11 @@ export class PagosService {
         map(this.extractData));
     }
 
-    sendPrestamo(reqPago: ReqPago){
-      return this.http.put(endpointPrestamo, reqPago);
+    sendPrestamo(reqPago: ReqPago): Observable<any> {
+      return this.http.put(endpointPago, reqPago,{
+        observe: 'body',
+        responseType: 'json'
+          });
     }
 
     getPagos() {
