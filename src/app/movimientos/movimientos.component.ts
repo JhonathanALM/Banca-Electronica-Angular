@@ -1,21 +1,12 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
-import { LoginService } from './../services/service/login.service';
-//import { Component, OnInit } from '@angular/core';
-import { MenuItem, SelectItem } from 'primeng/primeng';
-import { CuentaService } from '../Services/Service/cuenta.service';
-import { CuentasService } from 'src/app/Services/service/cuentas.service';
-import { Usuario } from '../Services/domain/usuario';
-import { Cuenta } from 'src/app/Services/domain/cuenta';
-import { MovimientoService } from '../Services/Service/movimiento.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DatePipe, formatDate } from '@angular/common';
-import { FormatoFechaPipe } from '../util/formato-fecha.pipe';
-import { Movimiento } from '../Services/domain/moviento';
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/primeng';
 
-/*JONA LO QUE ESTÁ COMENTADO ES LO QUE DEBERÍA IR CEDULA Y LA CUENTA, NO SE COMO ESTAN MANEJANDO LO DEL USUARIO PERO LO DEMAS FUNCIONA
-AHORITA VA QUEMADO LA CEDULA Y LA CUENTA
-CEDULA:1234567890
-CUENTA:100123  */
+import { CuentasService } from '../Services/service/cuentas.service';
+import { Usuario } from '../Services/domain/usuario';
+import { Cuenta } from '../Services/domain/cuenta';
+import { Movimiento } from '../Services/domain/moviento';
+import { FormatoFechaPipe } from '../util/formato-fecha.pipe';
+import { MovimientoService } from '../Services/Service/movimiento.service';
 
 @Component({
   selector: 'app-movimientos',
@@ -27,132 +18,80 @@ CUENTA:100123  */
 export class MovimientoComponent implements OnInit {
 
   //Listas
-  cuentas: Cuenta[];
-  cuenta: SelectItem[];
-  cuentaSeleccionada: Cuenta;
-  cuenta_ser: any;
-  cuenta_sel: any;
-  movimientos: any;
-  movimientoSeleccionado: Movimiento;
-  fecha1: any;
-  fecha2: any;
+  cuentas1: Cuenta[];
+  //  prestamos1: Prestamo[];
+
+  //distribución
   cols: any[];
+  // cols2: any[];
+
+  cuentaSeleccionada: Cuenta;
+  // prestamoSeleccionado: Cuenta;
+
   unUsuario: Usuario;
-  curretUser: any;
-
   identificadorUsuario: MenuItem[];
-  headers = new HttpHeaders;
-  cedula: Usuario
+  desde: any = "";
+  hasta: any = "";
+  movimientos: Movimiento[];
+  movimientoSeleccionada: Movimiento;
 
-
-  fechaHasta: Date;
-  fechaDesde: Date;
-
-
-  //nCedula:String;
-  nCedulaKYC: String;
-
-  constructor(
-    public movimientoService: MovimientoService,
-    public _cuentaService: CuentaService,
-    private http: HttpClient,
-    private auth: LoginService,
-    private formatoFechaPipe: FormatoFechaPipe
-  ) {
-    this.headers.append('Content-Type', 'applicaion/json');
-    this.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    this.headers.append('Access-Control-Allow-Origin', '*');
-  }
-
+  constructor(private movimientoService: MovimientoService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe) { }
 
   ngOnInit() {
-    this.curretUser = this.auth.getCurrentUser();
-    console.log("curr2:::", this.curretUser);
+    this.obtenerListaCuentas();
     this.obtenerUnUsuario();
-
     this.cols = [
       { field: 'documento', header: 'Documento' },
       { field: 'fecha', header: 'Fecha' },
+      { field: 'saldo', header: 'Saldo' },
       { field: 'tipo', header: 'Tipo' },
-      { field: 'valor', header: 'Valor' },
-      { field: 'saldo', header: 'Saldo' }
+      { field: 'valor', header: 'Valor' }
     ];
-
-    this.cuenta = [];
-    this.cuenta.push({ label: 'Seleccione la cuenta', value: null });
-    this._cuentaService.getCuentasAll(this.curretUser).subscribe(
-      (data) => {
-        this.cuentas = data;
-        this.cuenta = [];
-        this.cuenta.push({ label: 'Seleccione la cuenta', value: null });
-        for (let key of this.cuentas) {
-          this.cuenta.push({ label: key.cuenta, value: key.cuenta });
-        }
-        this.cuentaSeleccionada = this.cuentas[0];
-        console.log(this.cuentaSeleccionada.cuenta)
-
-      },
-      err => {
-        console.log("Error.");
-      });
-
-    console.log('Test2');
-    let movimientos = this.http.get('http://40.87.45.204:8080/Modulo-Cuentas-Pll-web/api/cuenta/' + this.curretUser, { headers: this.headers });
-    console.log(this.cedula);
-    movimientos.subscribe((response) => {
-      console.log(response);
-      console.log(response);
-      this.cuenta_ser = <any>response;
-    }
-    );
 
   }
 
   btnAceptar() {
-
-    //La fecha se captura desde el calendario como mes-dia-año
-    //Y se manda como parametro día-mes-año
-    let fi = this.formatoFechaPipe.transform(this.fechaDesde.toDateString());
-    let ff = this.formatoFechaPipe.transform(this.fechaHasta.toDateString());
-
-    this.movimientoService.getMovimientosAll(fi, ff, this.cuentaSeleccionada.cuenta).subscribe((data) => {
-
-      console.log("cuenta", this.cuentaSeleccionada.cuenta)
-      this.movimientos = data;
-
-      console.log(data);
-    },
-      err => {
-        console.log("Error cuenta");
-        console.log("cuentaser", this.cuentaSeleccionada.cuenta)
-
-
-
-      }
-    );
+    console.log("DESDE=:>", this.desde);
+    console.log("HASTA=:>", this.hasta);
+    console.log("CUENTA=:>", this.cuentaSeleccionada.cuenta);
+    this.obtenerMovimiento();
+  }
+  obtenerListaCuentas() {
+    this.cuentasService.getListaCuentas("1004456891").subscribe((data) => {
+      console.log("lista Cuentas", data);
+      this.cuentas1 = data;
+      this.cuentaSeleccionada = this.cuentas1[0];
+    });
   }
 
-  cargarCuentas() {
-    this._cuentaService.getCuentasAll(this.curretUser).subscribe(
-      //this._cuentaService.getCuentasAll("1234567890").subscribe(
-      data => {
-        this.movimientos = data;
-        console.log(this.curretUser);
-      },
-      err => {
-        console.log("Error");
-      }
-    );
+  obtenerMovimiento() {
+    let fi = this.formatoFechaPipe.transform(this.desde.toDateString());
+
+    let ff = this.formatoFechaPipe.transform(this.hasta.toDateString());
+
+    console.log("FI=:>", fi);
+    console.log("FF=:>", ff);
+
+    this.movimientoService.getMovimientosHistorial(fi, ff, this.cuentaSeleccionada.cuenta).subscribe((data) => {
+      console.log("HISTORIAL DE MOVIMIENTOS", data);
+      this.movimientos = data;
+    });
   }
 
   obtenerUnUsuario() {
-    this.movimientoService.getUnUsuario(this.curretUser).subscribe((data) => {
+    this.cuentasService.getUnUsuario("1004456891").subscribe((data) => {
       console.log("usr", data);
       this.identificadorUsuario = [];
+
       this.unUsuario = data;
       this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
   }
 
+  updateInfo() {
+    console.log("click");
+    this.obtenerListaCuentas();
+    // this.obtenerListaPrestamos();
+  }
 
 }

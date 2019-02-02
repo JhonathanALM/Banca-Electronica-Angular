@@ -2,14 +2,49 @@
   <div class="ui-g-12">
     <div class="card card-w-title">
       <h1>Solicitud de Préstamos</h1>
+      <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>
+      <br />
       
-      <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>    
-      <br/>
-      
+      <div class="card card-w-title">
+        <h1></h1>
+        <p-messages [(value)]="msgs"></p-messages>
+        <h1>holi </h1>
 
-      <br/>
-      
+        <div class="ui-g form-group">
+          <div class="ui-g-12 ui-md-6">
+            <div class="ui-g-12 ui-md-4">
+              <label for="dropdown">Cuenta</label>
+            </div>
+            <div class="ui-g-12 ui-md-8">
+              <!--Aqui hay q cambiar-->
+              <p-dropdown [options]="saldo" [(ngModel)]="cta_org" placeholder="Seleccione cuenta de origen"></p-dropdown>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+              <label for="input">A la cuenta:</label>
+            </div>
+            <div class="ui-g-12 ui-md-8">
+              <!--<input type="text" pInputText pKeyFilter="pnum" [(ngModel)]="valorPagar" (keyup)="estadoPago($event)">-->
+              <input id="input" [(ngModel)]="cta_dest" type="text" pInputText pKeyFilter="pnum" (keyup)="estado($event)" />
+            </div>
+            <div class="ui-g-12 ui-md-4">
+              <label for="input">Monto</label>
+            </div>
+            <div class="ui-g-12 ui-md-8">
+              <input id="input" [(ngModel)]="monto" type="text" pInputText pKeyFilter="pnum" (keyup)="estado($event)" />
+            </div>
+            <div class="ui-g-12 ui-md-4">
+            </div>
+            <div class="ui-g-12 ui-md-8">
+              <!--<button pButton type="button" label="Aceptar" (click)="btnAceptar()" icon="fa fa-check-square"></button>-->
+              <p-button label="Aceptar" icon="fa fa-check-square" (click)="btnAceptar()" (onClick)="mostrar($event, pago)"
+                [disabled]="!permiteTranferir"></p-button>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+
+
     </div>
   </div>
-
 </div>
