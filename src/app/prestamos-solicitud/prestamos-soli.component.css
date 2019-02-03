@@ -80,3 +80,19 @@
         background-color: rgba(165, 165, 165, 0.1)
     }
 }
+#izquierda { 
+    position: relative; 
+    width: 50%; 
+    top: 0; 
+    left: 0; 
+    float: left; 
+    height: 100%; 
+} 
+#derecha { 
+    position: relative; 
+    width: 50%; 
+    top: 0; 
+    right: 0; 
+    float: right; 
+    height: 100%; 
+}
