@@ -99,9 +99,13 @@ export class TransfDirectaComponent implements OnInit {
       }
     },
       error => {
-        this.msgs = [];
-        this.msgs.push({ severity: 'error', summary: 'Error', detail: 'Transferencia no realizada, verifique la información' });
-
+        if(error.status==409){
+          this.msgs = [];
+          this.msgs.push({ severity: 'warn', summary: 'Transferencia no realizada', detail: ', Fondos Insuficientes' });  
+        }else{
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Transferencia no realizada', detail: ', Verifique la información' });  
+        }  
       }
     );
 

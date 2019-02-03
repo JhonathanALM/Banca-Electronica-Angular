@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
-
+import {MessageService} from 'primeng/api';
 import { CuentasService } from '../Services/service/cuentas.service';
 import { Usuario } from '../Services/domain/usuario';
 import { Cuenta } from '../Services/domain/cuenta';
@@ -12,7 +12,7 @@ import { MovimientoService } from '../Services/Service/movimiento.service';
   selector: 'app-movimientos',
   templateUrl: './movimientos.component.html',
   styleUrls: ['./movimientos.component.css'],
-  providers: [FormatoFechaPipe]
+  providers: [FormatoFechaPipe, MessageService]
 
 })
 export class MovimientoComponent implements OnInit {
@@ -35,7 +35,7 @@ export class MovimientoComponent implements OnInit {
   movimientos: Movimiento[];
   movimientoSeleccionada: Movimiento;
 
-  constructor(private movimientoService: MovimientoService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe) { }
+  constructor(private movimientoService: MovimientoService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe,private messageService: MessageService) { }
 
   ngOnInit() {
     this.obtenerListaCuentas();
@@ -71,10 +71,15 @@ export class MovimientoComponent implements OnInit {
 
     console.log("FI=:>", fi);
     console.log("FF=:>", ff);
-
+    this.movimientos =[];
     this.movimientoService.getMovimientosHistorial(fi, ff, this.cuentaSeleccionada.cuenta).subscribe((data) => {
       console.log("HISTORIAL DE MOVIMIENTOS", data);
       this.movimientos = data;
+      if(this.movimientos.length==undefined){
+        this.messageService.add({severity:'warn', summary: 'Sin registros', detail:'Verifique la fecha ingresada'});
+      }else{
+        this.messageService.add({severity:'info', summary: 'Registros Encontrados', detail:'tiene: '+this.movimientos.length});
+      }
     });
   }
 

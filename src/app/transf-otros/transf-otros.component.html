@@ -54,30 +54,8 @@
         </div>
         <br />
       </div>
-
-
-
-
-      <div class="card card-w-title">
-        <h1></h1>
-        <h1>Concepto</h1>
-        <div class="ui-g form-group">
-          <div class="ui-g-12 ui-md-6">
-            <div class="ui-g-12 ui-md-4">
-              <label for="input">Por Concepto de</label>
-            </div>
-            <div class="ui-g-12 ui-md-8">
-              <input id="input" type="text" pInputText />
-            </div>
-            <div class="ui-g-12 ui-md-4"></div>
-            <div class="ui-g-12 ui-md-8">
-              <p-button label="Aceptar" icon="fa fa-check-square" (click)="btnAceptar()" (onClick)="mostrar($event, pago)"
-                [disabled]="!permiteTranferir"></p-button>
-            </div>
-          </div>
-        </div>
-        <br />
-      </div>
+      <p-button label="Aceptar" icon="fa fa-check-square" (click)="btnAceptar()" (onClick)="mostrar($event, pago)"
+        [disabled]="!permiteTranferir"></p-button>
     </div>
   </div>
 </div>
