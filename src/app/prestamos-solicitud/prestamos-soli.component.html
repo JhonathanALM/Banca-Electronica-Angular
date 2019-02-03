@@ -2,49 +2,116 @@
   <div class="ui-g-12">
     <div class="card card-w-title">
       <h1>Solicitud de Préstamos</h1>
+
       <p-breadcrumb [model]="identificadorUsuario" [home]="{icon: 'fa fa-user'}"></p-breadcrumb>
       <br />
-      
       <div class="card card-w-title">
-        <h1></h1>
-        <p-messages [(value)]="msgs"></p-messages>
-        <h1>holi </h1>
+        <h1>Préstamos</h1>
 
-        <div class="ui-g form-group">
-          <div class="ui-g-12 ui-md-6">
-            <div class="ui-g-12 ui-md-4">
-              <label for="dropdown">Cuenta</label>
-            </div>
-            <div class="ui-g-12 ui-md-8">
-              <!--Aqui hay q cambiar-->
-              <p-dropdown [options]="saldo" [(ngModel)]="cta_org" placeholder="Seleccione cuenta de origen"></p-dropdown>
-            </div>
-            <div class="ui-g-12 ui-md-4">
-              <label for="input">A la cuenta:</label>
-            </div>
-            <div class="ui-g-12 ui-md-8">
-              <!--<input type="text" pInputText pKeyFilter="pnum" [(ngModel)]="valorPagar" (keyup)="estadoPago($event)">-->
-              <input id="input" [(ngModel)]="cta_dest" type="text" pInputText pKeyFilter="pnum" (keyup)="estado($event)" />
-            </div>
-            <div class="ui-g-12 ui-md-4">
-              <label for="input">Monto</label>
-            </div>
-            <div class="ui-g-12 ui-md-8">
-              <input id="input" [(ngModel)]="monto" type="text" pInputText pKeyFilter="pnum" (keyup)="estado($event)" />
-            </div>
-            <div class="ui-g-12 ui-md-4">
-            </div>
-            <div class="ui-g-12 ui-md-8">
-              <!--<button pButton type="button" label="Aceptar" (click)="btnAceptar()" icon="fa fa-check-square"></button>-->
-              <p-button label="Aceptar" icon="fa fa-check-square" (click)="btnAceptar()" (onClick)="mostrar($event, pago)"
-                [disabled]="!permiteTranferir"></p-button>
+        <div class="card no-margin">
+          <h1></h1>
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-md-6" style="width:100%;">
+
+              <div class="ui-g-12 ui-md-4">
+                <label for="dropdown">Tipo de Préstamo:</label>
+              </div>
+              <div class="ui-g-12 ui-md-8">
+                <p-dropdown [options]="tPrestamo" [(ngModel)]="tip_prestamo" placeholder="Seleccione un préstamo"></p-dropdown>
+                <br />
+                <button pButton type="button" label="Buscar" (click)="obtenerInformacionPrestamo()" icon="pi pi-search"></button>
+              </div>
+
+              <div id="oculto" style="visibility:hidden">
+                <div id="izquierda">
+                  <p>
+                    <label for="input">INFORMACION REFERENTE A PRÉSTAMO</label>
+                  </p>
+                  <br />
+                  <hr>
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">ESTADO:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="estadoL" type="text" disabled pInputText />
+                  </div>
+
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">TIPO CLIENTE:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="tClienteL" type="text" disabled pInputText />
+                  </div>
+
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">DESCRIPCION:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="descripcionL" type="text" disabled pInputText />
+                  </div>
+
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">MONTO MÍNIMO:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="montoMinL" type="text" disabled pInputText />
+                  </div>
+
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">MONTO MÁXIMO:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="montoMaxL" type="text" disabled pInputText />
+                  </div>
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">PLAZO MÍNIMO:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="plazoMinL" type="text" disabled pInputText />
+                  </div>
+
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">PLAZO MÁXIMO:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="plazoMaxL" type="text" disabled pInputText />
+                  </div>
+                </div>
+
+                <div id="derecha">
+                  <p>
+                    <label for="input">REGISTRO DE INFORMACIÓN PARA LA SOLICITUD</label>
+                  </p>
+                  <br />
+                  <hr>
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">MONTO SOLICITUD:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="montoSol" type="text" pInputText />
+                  </div>
+
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="input">PLAZO SOLICITUD:</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <input id="input" [(ngModel)]="plazoSol" type="text" pInputText />
+                  </div>
+
+                  <div class="ui-g-12 ui-md-8">
+                    <button pButton type="button" label="Aceptar" (click)="obtenerTiposPrestamos()" icon="fa fa-check-square"></button>
+                  </div>
+
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <br />
+
       </div>
-
-
     </div>
   </div>
 </div>

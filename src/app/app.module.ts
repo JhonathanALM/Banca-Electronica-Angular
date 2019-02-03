@@ -92,6 +92,7 @@ import { TransfOtrosComponent } from './transf-otros/transf-otros.component';
 import { TemplateComponent } from './template/template.component';
 import { LoginComponent } from './login/login.component';
 import { MovimientoService } from './Services/Service/movimiento.service';
+import { SolicitudPrestamoService } from './Services/Service/solicitudPrestamo.service';
 import { CuentasService } from './Services/service/cuentas.service';
 import { FormatoFechaPipe } from './util/formato-fecha.pipe';
 import { CuentaService } from './Services/Service/cuenta.service';
@@ -192,7 +193,7 @@ import { CuentaService } from './Services/Service/cuenta.service';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        /*CarService, CountryService, EventService, NodeService, */CuentaService, CuentasService, MovimientoService, DatePipe
+        /*CarService, CountryService, EventService, NodeService, */CuentaService, CuentasService, MovimientoService, SolicitudPrestamoService, DatePipe
     ],
     bootstrap: [AppComponent]
 })
