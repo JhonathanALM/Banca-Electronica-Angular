@@ -7,7 +7,7 @@
       <br />
 
       <p-table [columns]="cols" [value]="cuentas1" selectionMode="single" dataKey="cuenta" [(selection)]="cuentaSeleccionada"
-         [responsive]="true">
+        [responsive]="true">
         <ng-template pTemplate="caption">
           LISTA DE CUENTAS
         </ng-template>
@@ -32,31 +32,31 @@
 
       <br />
       <p-table [value]="prestamos1" selectionMode="single" dataKey="id" [(selection)]="prestamoSeleccionado"
-      [responsive]="true">
-          <ng-template pTemplate="caption">
-            LISTA DE PRÉSTAMOS
-            </ng-template>
+        [responsive]="true">
+        <ng-template pTemplate="caption">
+          LISTA DE PRÉSTAMOS
+        </ng-template>
         <ng-template pTemplate="header">
-            <tr>
-                <th >Número</th>
-                <th>Tipo</th>
-                <th>Estado</th>
-                <th>Monto</th>
-                <th >Fecha</th>
-                <th>Saldo</th>
-            </tr>
+          <tr>
+            <th>Número</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Saldo</th>
+          </tr>
         </ng-template>
         <ng-template pTemplate="body" let-hitem>
-            <tr>
-                <td>{{hitem.numero}}</td>
-                <td>{{hitem.tipo}}</td>
-                <td>{{hitem.estado == 'act'?'Activo':'Pasivo'}}</td>
-                <td>{{hitem.monto}}</td>
-                <td>{{toDate(hitem.fecha) | formatoFecha}}</td>
-                <td>{{hitem.saldo}}</td>
-            </tr>
+          <tr>
+            <td>{{hitem.numero}}</td>
+            <td>{{hitem.tipo}}</td>
+            <td>{{hitem.estado == 'act'?'Activo':'Pasivo'}}</td>
+            <td>{{toDate(hitem.fecha) | formatoFecha}}</td>
+            <td>{{hitem.monto}}</td>
+            <td>{{hitem.saldo}}</td>
+          </tr>
         </ng-template>
-    </p-table>
+      </p-table>
 
       <br />
       <div class="ui-g-12 ui-md-5"></div>
