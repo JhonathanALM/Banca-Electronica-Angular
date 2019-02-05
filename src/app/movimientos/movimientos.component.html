@@ -43,13 +43,12 @@
                     <th>Fecha</th>
                     <th>Valor</th>
                     <th>Saldo</th>
-
-
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-newItem>
                 <tr>
                     <td>{{newItem.documento}}</td>
+                    <td>{{newItem.fecha | formatoFecha}}</td>                    
                     <td>{{newItem.tipo}}</td>
                     <td>{{newItem.fecha | formatoFecha}}</td>
                     <td>{{newItem.valor}}</td>

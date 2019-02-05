@@ -56,6 +56,9 @@ export class PrestamoSimuladorComponent implements OnInit {
   reset(){
     console.log("click2");
     this.cuentas1=[];
+    this.can=null;
+    this.per=null;
+    this.imp=null;
   }
 
   getAmortization(capital, periods, interest) {    

@@ -30,6 +30,11 @@
                   <b>{{pago.valorCuota}}</b>
                 </div>
 
+                <div class="ui-g-4 ui-sm-6">Restante: </div>
+                <div class="ui-g-8 ui-sm-6">
+                  <b>{{toNumber(pago.saldoRestante)}}</b>
+                </div>
+
                 <div class="ui-g-4 ui-sm-6">Fecha: </div>
                 <div class="ui-g-8 ui-sm-6">
                   <b>{{toDate(pago.fechaAmortizacion) | formatoFecha}}</b>
