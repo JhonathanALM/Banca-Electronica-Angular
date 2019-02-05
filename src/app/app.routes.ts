@@ -1,5 +1,5 @@
-import { AuthGuard } from './guards/auth.guard';
-import { Routes, RouterModule } from '@angular/router';
+//import { AuthGuard } from './guards/auth.guard';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { PosConsolidadaComponent } from './pos-consolidada/pos-consolidada.component';
 import { MovimientoComponent } from './movimientos/movimientos.component';
@@ -11,12 +11,14 @@ import { TransfHistorialComponent } from './transf-historial/transf-historial.co
 import { TransfOtrosComponent } from './transf-otros/transf-otros.component';
 import { LoginComponent } from './login/login.component';
 import { TemplateComponent } from './template/template.component';
+import { LoginService } from './Services/Service/login.service';
+//import {AuthorizatedGuard} from "./Services/guards/authorizated.guard";
 
 export const routes: Routes = [
-    { path: '', component: LoginComponent },
+    { path: '', component: LoginComponent, },
     {
         path: 'template', component: TemplateComponent, children: [
-            { path: 'main', component: PosConsolidadaComponent,canActivate: [AuthGuard]},
+            { path: 'main', component: PosConsolidadaComponent },
             { path: 'movimientos', component: MovimientoComponent },
             { path: 'solicitudp', component: PrestamosSoliComponent },
             { path: 'pagosp', component: PrestamosPagosComponent },

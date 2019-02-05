@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { CuentasService } from '../Services/service/cuentas.service';
 import { Usuario } from '../Services/domain/usuario';
 import { Cuenta } from '../Services/domain/cuenta';
@@ -35,17 +35,18 @@ export class MovimientoComponent implements OnInit {
   movimientos: Movimiento[];
   movimientoSeleccionada: Movimiento;
 
-  constructor(private movimientoService: MovimientoService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe,private messageService: MessageService) { }
+  constructor(private movimientoService: MovimientoService, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe, private messageService: MessageService) { }
 
   ngOnInit() {
     this.obtenerListaCuentas();
     this.obtenerUnUsuario();
     this.cols = [
       { field: 'documento', header: 'Documento' },
-      { field: 'fecha', header: 'Fecha' },
-      { field: 'saldo', header: 'Saldo' },
       { field: 'tipo', header: 'Tipo' },
-      { field: 'valor', header: 'Valor' }
+      { field: 'fecha', header: 'Fecha' },
+      { field: 'valor', header: 'Valor' },
+      { field: 'saldo', header: 'Saldo' }
+
     ];
 
   }
@@ -71,14 +72,14 @@ export class MovimientoComponent implements OnInit {
 
     console.log("FI=:>", fi);
     console.log("FF=:>", ff);
-    this.movimientos =[];
+    this.movimientos = [];
     this.movimientoService.getMovimientosHistorial(fi, ff, this.cuentaSeleccionada.cuenta).subscribe((data) => {
       console.log("HISTORIAL DE MOVIMIENTOS", data);
       this.movimientos = data;
-      if(this.movimientos.length==undefined){
-        this.messageService.add({severity:'warn', summary: 'Sin registros', detail:'Verifique la fecha ingresada'});
-      }else{
-        this.messageService.add({severity:'info', summary: 'Registros Encontrados', detail:'tiene: '+this.movimientos.length});
+      if (this.movimientos.length == undefined) {
+        this.messageService.add({ severity: 'warn', summary: 'Sin registros', detail: 'Verifique la fecha ingresada' });
+      } else {
+        this.messageService.add({ severity: 'info', summary: 'Registros Encontrados', detail: 'tiene: ' + this.movimientos.length });
       }
     });
   }
