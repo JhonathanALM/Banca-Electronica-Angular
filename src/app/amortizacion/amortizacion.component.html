@@ -64,8 +64,7 @@
                                     <b>{{pago.tasainteres}}</b>
                                 </div>
                                 <div class="ui-g-8 ui-sm-6 text-derecha">
-                                    <p-button label="Realizar Pago" icon="fa fa-money" (onClick)="mostrarDetallePago($event, pago)"
-                                        ></p-button>
+                                    <p-button label="Realizar Pago" icon="fa fa-money" (onClick)="mostrarDetallePago($event, pago)"></p-button>
                                 </div>
                             </div>
                         </div>
@@ -136,5 +135,7 @@
 
         </p-footer>
     </p-dialog>
-
+    <div class="ui-g-8 ui-sm-6 text-derecha">
+        <p-button label="Regresar" icon="pi pi-angle-left" (onClick)="btnRegresar()"></p-button>
+    </div>
 </div>

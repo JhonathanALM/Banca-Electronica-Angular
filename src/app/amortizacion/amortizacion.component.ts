@@ -151,18 +151,8 @@ export class AmortizacionComponent implements OnInit {
     event.preventDefault();
   }
 
-  realizarPago() {
-    this.requestPago = {
-      id: this.unPago.numCuota,
-      valorPagado: Number(this.valorPagar)
-    }
-    this.pagosService.sendPrestamo(this.requestPago).subscribe((data) => {
-      this.obtenerInfoPago();
-      this.display = false;
-    }, error => {
-      this.display = false;
-    });
-
+  btnRegresar(){
+    this.router.navigate(["/template/solicitudp"]);
   }
 
   toNumber(_valor) {
