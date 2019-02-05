@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
-
 import { CuentasService } from '../Services/service/cuentas.service';
 import { Usuario } from '../Services/domain/usuario';
 import { Cuenta } from '../Services/domain/cuenta';
@@ -87,6 +86,7 @@ export class TransfDirectaComponent implements OnInit {
 
   btnAceptar() {
     this.msgs = [];
+
     this.cuentasService.getTransferencia(this.cta_org, this.cta_dest, this.monto).subscribe((data) => {
       var aux = data.status;
       if (aux == 201) {
@@ -99,9 +99,13 @@ export class TransfDirectaComponent implements OnInit {
       }
     },
       error => {
-        this.msgs = [];
-        this.msgs.push({ severity: 'error', summary: 'Error', detail: 'Transferencia no realizada, verifique la información' });
-
+        if(error.status==409){
+          this.msgs = [];
+          this.msgs.push({ severity: 'warn', summary: 'Transferencia no realizada', detail: ', Fondos Insuficientes' });  
+        }else{
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Transferencia no realizada', detail: ', Verifique la información' });  
+        }  
       }
     );
 

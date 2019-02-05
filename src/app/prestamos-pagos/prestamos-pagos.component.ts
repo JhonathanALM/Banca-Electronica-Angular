@@ -40,12 +40,13 @@ export class PrestamosPagosComponent implements OnInit {
       this.pagos =[];      
       this.pagos.push(data);
       this.unPago = this.pagos[0];
+      this.montoTotal = this.pagos[0].saldoRestante;
       this.estadoPago();
     });
   }
   estadoPago() {
     var valorPago = Number(this.valorPagar);
-    this.permitePago = (valorPago <= this.unPago.valorCuota) ? true : false;
+    this.permitePago = (valorPago <= this.unPago.saldoRestante) ? true : false;
   }
 
   mostrarDetallePago(event: Event, pago: Pago) {
@@ -57,7 +58,7 @@ export class PrestamosPagosComponent implements OnInit {
   realizarPago(){
     this.requestPago = {
       id: this.unPago.numCuota,
-      valorPagado: Number(this.valorPagar)
+      valorCuota: Number(this.valorPagar)
     }
     console.log("realizando pago... ", this.requestPago);
     this.pagosService.sendPrestamo(this.requestPago).subscribe((data)=>{
@@ -67,6 +68,7 @@ export class PrestamosPagosComponent implements OnInit {
     }, error =>{
       console.log("ocurrio error",error);
       this.display = false;  
+      this.obtenerInfoPago(); 
     });
     
   }

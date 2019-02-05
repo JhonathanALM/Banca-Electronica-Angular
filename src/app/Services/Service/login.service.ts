@@ -6,13 +6,14 @@ import { isNullOrUndefined } from 'util';
 
 const endpointLogin = '/user/';
 
+
 @Injectable({
   providedIn: 'root'
 })
 //estoy adentrook
 
 export class LoginService {
-
+  //  private currentSession: Session = null;
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
   private extractData(res: Response) {
     let body = res;
@@ -47,6 +48,19 @@ export class LoginService {
       return null;
     }
   }
+
+
+  /*  isAuthenticated(): boolean {
+      return (this.getCurrentToken() != null) ? true : false;
+    };
+    getCurrentToken(): string {
+      var session = this.getCurrentSession();
+      return (session && session.token) ? session.token : null;
+    };
+    getCurrentSession(): Session {
+      return this.currentSession;
+    }*/
+
 
   logoutUser() {
     let accessToken = localStorage.getItem('accessToken');

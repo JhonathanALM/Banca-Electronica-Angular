@@ -30,6 +30,11 @@
                   <b>{{pago.valorCuota}}</b>
                 </div>
 
+                <div class="ui-g-4 ui-sm-6">Restante: </div>
+                <div class="ui-g-8 ui-sm-6">
+                  <b>{{toNumber(pago.saldoRestante)}}</b>
+                </div>
+
                 <div class="ui-g-4 ui-sm-6">Fecha: </div>
                 <div class="ui-g-8 ui-sm-6">
                   <b>{{toDate(pago.fechaAmortizacion) | formatoFecha}}</b>
@@ -72,17 +77,17 @@
       <div class="ui-g-6">Prestamo Nº: </div>
       <div class="ui-g-6 text-derecha">{{unPago.numCuota}}</div>
 
-      <div class="ui-g-6">Prestamo Total: </div>
-      <div class="ui-g-6 text-derecha">{{ toNumber(montoTotal)}}</div>
-
-      <div class="ui-g-6">Valor Cuotal Actual: </div>
+      <div class="ui-g-6">Valor Cuotal: </div>
       <div class="ui-g-6 text-derecha">{{ toNumber(unPago.valorCuota) }}</div>
+
+      <div class="ui-g-6">Saldo Pendiente: </div>
+      <div class="ui-g-6 text-derecha">{{ toNumber(montoTotal)}}</div>
 
       <div class="ui-g-6">Pago a realizar: </div>
       <div class="ui-g-6 text-derecha">{{ toNumber(valorPagar) }}</div>
       <div class="ui-g-12 text-derecha">_________________________________________________________________</div>
       <div class="ui-g-6">Saldo: </div>
-      <div class="ui-g-6 text-derecha">{{ toNumber(unPago.valorCuota - valorPagar)}}</div>
+      <div class="ui-g-6 text-derecha">{{ toNumber(unPago.saldoRestante - valorPagar)}}</div>
 
     </div>
     <p-footer>

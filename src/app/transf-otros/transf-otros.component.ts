@@ -63,10 +63,9 @@ export class TransfOtrosComponent implements OnInit {
       { label: 'Volvo', value: 'Volvo' },
     ];
     this.bancos = [
-      { label: 'PACIFICO', value: 'PACIFICO' },
-      { label: 'PICHINCHA', value: 'PICHINCHA' },
-      { label: 'INTERNACIONAL', value: 'INTERNACIONAL' },
-      { label: 'MUTUALISTA', value: 'MUTUALISTA' }
+      { label: 'BANCO BOLIVARIANO', value: '1' },
+      { label: 'BANCO PICHINCHA', value: '2' },
+      { label: 'BANCO INTERNACIONAL', value: '3' }
     ]
     this.tipos = [
       { label: 'CEDULA', value: 'CEDULA' },
@@ -107,11 +106,15 @@ export class TransfOtrosComponent implements OnInit {
         this.cta_origen = null;
       }
     },
-      error => {
+    error => {
+      if(error.status==409){
         this.msgs = [];
-        this.msgs.push({ severity: 'error', summary: 'Error', detail: 'Transferencia no realizada, verifique la información' });
-
-      }
+        this.msgs.push({ severity: 'warn', summary: 'Transferencia no realizada', detail: ', Fondos Insuficientes' });  
+      }else{
+        this.msgs = [];
+        this.msgs.push({ severity: 'error', summary: 'Transferencia no realizada', detail: ', Verifique la información' });  
+      }  
+    }
     );
 
   }

@@ -30,27 +30,28 @@ export class PosConsolidadaComponent implements OnInit {
   unUsuario: Usuario;
   identificadorUsuario: MenuItem[];
   miArray = [];
-  curretUser:any;
-  constructor(private cuentasService: CuentasService, private auth:LoginService) { }
+  curretUser: any;
+  constructor(private cuentasService: CuentasService, private auth: LoginService) { }
   ngOnInit() {
     this.curretUser = this.auth.getCurrentUser();
-    console.log("curr::::",this.curretUser);
+    console.log("curr::::", this.curretUser);
     this.obtenerListaCuentas();
     this.obtenerListaPrestamos();
     this.obtenerUnUsuario();
 
     this.cols = [
       { field: 'cuenta', header: 'Cuenta' },
+      { field: 'tipo', header: 'Tipo' },
       { field: 'estado', header: 'Estado' },
-      { field: 'saldo', header: 'Saldo' },
-      { field: 'tipo', header: 'Tipo' }
+      { field: 'saldo', header: 'Saldo' }
+
     ];
     this.cols2 = [
       { field: 'numero', header: 'Número' },
       { field: 'tipo', header: 'Tipo' },
       { field: 'estado', header: 'Estado' },
-      { field: 'monto', header: 'Monto' },
       { field: 'fecha', header: 'Fecha' },
+      { field: 'monto', header: 'Monto' },
       { field: 'saldo', header: 'Saldo' }
     ];
 
@@ -78,7 +79,7 @@ export class PosConsolidadaComponent implements OnInit {
       console.log("usr", data);
       this.identificadorUsuario = [];
       this.unUsuario = data;
-      this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
+      this.identificadorUsuario.push({ label: this.unUsuario.apellidos +" "+ this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
   }
 
@@ -88,9 +89,9 @@ export class PosConsolidadaComponent implements OnInit {
     this.obtenerListaPrestamos();
   }
 
-  toDate(_miString){
+  toDate(_miString) {
     let patron = "[UTC]";
-    let nuevoValor    = "";
+    let nuevoValor = "";
     return _miString.replace(patron, nuevoValor);
   }
 }

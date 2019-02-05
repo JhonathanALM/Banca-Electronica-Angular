@@ -2,7 +2,7 @@
 <br />
 <div class="card card-w-title">
     <h1>Movimientos</h1>
-
+    <p-toast [style]="{marginTop: '80px'}"></p-toast>
     <div class="ui-g form-group" style="margin-top:20px">
         <div class="ui-g-12 ui-md-4">
             <label for="pc-numero-cuenta">Número de Cuenta:</label>
@@ -39,19 +39,20 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Documento</th>
-                    <th>Fecha</th>
-                    <th>Saldo</th>
                     <th>Tipo</th>
+                    <th>Fecha</th>
                     <th>Valor</th>
+                    <th>Saldo</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-newItem>
                 <tr>
                     <td>{{newItem.documento}}</td>
-                    <td>{{newItem.fecha | formatoFecha}}</td>
-                    <td>{{newItem.saldo}}</td>
+                    <td>{{newItem.fecha | formatoFecha}}</td>                    
                     <td>{{newItem.tipo}}</td>
+                    <td>{{newItem.fecha | formatoFecha}}</td>
                     <td>{{newItem.valor}}</td>
+                    <td>{{newItem.saldo}}</td>
                 </tr>
             </ng-template>
         </p-table>

@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppRoutes } from './app.routes';
 
+import { RouterModule } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -107,6 +107,8 @@ import { AmortizacionComponent } from './amortizacion/amortizacion.component';
         AppRoutes,
         HttpClientModule,
         BrowserAnimationsModule,
+        BrowserModule,
+        //RouterModule.forRoot(AppRoutes),
         AccordionModule,
         AutoCompleteModule,
         BreadcrumbModule,
