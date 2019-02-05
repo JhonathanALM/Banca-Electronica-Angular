@@ -46,7 +46,7 @@ export class PrestamosPagosComponent implements OnInit {
   }
   estadoPago() {
     var valorPago = Number(this.valorPagar);
-    this.permitePago = (valorPago <= this.unPago.valorCuota) ? true : false;
+    this.permitePago = (valorPago <= this.unPago.saldoRestante) ? true : false;
   }
 
   mostrarDetallePago(event: Event, pago: Pago) {
