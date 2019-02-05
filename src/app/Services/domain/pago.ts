@@ -4,4 +4,5 @@ export interface Pago {
     id;
     numCuota;
     valorCuota;
+    saldoRestante;
 }

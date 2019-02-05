@@ -57,7 +57,7 @@ export class PrestamosPagosComponent implements OnInit {
   realizarPago(){
     this.requestPago = {
       id: this.unPago.numCuota,
-      valorPagado: Number(this.valorPagar)
+      valorCuota: Number(this.valorPagar)
     }
     console.log("realizando pago... ", this.requestPago);
     this.pagosService.sendPrestamo(this.requestPago).subscribe((data)=>{
@@ -67,6 +67,7 @@ export class PrestamosPagosComponent implements OnInit {
     }, error =>{
       console.log("ocurrio error",error);
       this.display = false;  
+      this.obtenerInfoPago(); 
     });
     
   }

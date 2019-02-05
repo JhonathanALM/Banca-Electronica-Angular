@@ -78,7 +78,7 @@ export class PosConsolidadaComponent implements OnInit {
       console.log("usr", data);
       this.identificadorUsuario = [];
       this.unUsuario = data;
-      this.identificadorUsuario.push({ label: this.unUsuario.apellidos + this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
+      this.identificadorUsuario.push({ label: this.unUsuario.apellidos +" "+ this.unUsuario.nombres + " - " + this.unUsuario.correoElectronico });
     });
   }
 
