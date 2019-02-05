@@ -11,6 +11,7 @@ import { TransfHistorialComponent } from './transf-historial/transf-historial.co
 import { TransfOtrosComponent } from './transf-otros/transf-otros.component';
 import { LoginComponent } from './login/login.component';
 import { TemplateComponent } from './template/template.component';
+import { AmortizacionComponent } from './amortizacion/amortizacion.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -23,7 +24,8 @@ export const routes: Routes = [
             { path: 'simuladorp', component: PrestamoSimuladorComponent },
             { path: 'transfdirecta', component: TransfDirectaComponent },
             { path: 'transfhistorial', component: TransfHistorialComponent },
-            { path: 'transfotros', component: TransfOtrosComponent }
+            { path: 'transfotros', component: TransfOtrosComponent },
+            { path: 'amortizacion', component: AmortizacionComponent }
         ]
     },
 ];

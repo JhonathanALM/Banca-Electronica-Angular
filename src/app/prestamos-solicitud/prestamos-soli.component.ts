@@ -9,6 +9,9 @@ import { LoginService } from './../services/service/login.service';
 import { SoilicitudPrestamo } from '../Services/domain/solicitudPrestamo';
 import { SolicitudPrestamoService } from '../Services/Service/solicitudPrestamo.service';
 
+import { Router, ActivatedRoute } from '@angular/router';
+
+
 
 
 @Component({
@@ -60,7 +63,7 @@ export class PrestamosSoliComponent implements OnInit {
   inforPrestamo: any = [];
 
 
-  constructor(private cuentasService: CuentasService, private solicitudPrestamo: SolicitudPrestamoService, private auth: LoginService) {
+  constructor(private cuentasService: CuentasService, private solicitudPrestamo: SolicitudPrestamoService, private auth: LoginService, private route: ActivatedRoute, private router: Router) {
     this.tPrestamo = [
       { label: 'Audi', value: 'Audi' },
       { label: 'BMW', value: 'BMW' },
@@ -98,22 +101,26 @@ export class PrestamosSoliComponent implements OnInit {
   }
 
   obtenerInformacionPrestamo() {
-    console.log("tipoPrestamo=:>", this.tip_prestamo);
-    this.solicitudPrestamo.getInformacionPrestamos(this.tip_prestamo).subscribe((data) => {
-      this.inforPrestamo = data;
-      console.log("INFROS=:>", this.inforPrestamo);
-      console.log("TAMA=:>", this.inforPrestamo.length);
-      this.estadoL = this.inforPrestamo.estado;
-      this.descripcionL = this.inforPrestamo.descripcion;
-      this.montoMinL = this.inforPrestamo.montoMin;
-      this.montoMaxL = this.inforPrestamo.montoMax;
-      this.plazoMinL = this.inforPrestamo.plazoMin;
-      this.plazoMaxL = this.inforPrestamo.plazoMax;
-      this.tClienteL = this.inforPrestamo.tipo_cliente;
-      document.getElementById('oculto').style.visibility = 'visible';
-    })
+        console.log("tipoPrestamo=:>", this.tip_prestamo);
+        this.solicitudPrestamo.getInformacionPrestamos(this.tip_prestamo).subscribe((data) => {
+          this.inforPrestamo = data;
+          console.log("INFROS=:>", this.inforPrestamo);
+          console.log("TAMA=:>", this.inforPrestamo.length);
+          this.estadoL = this.inforPrestamo.estado;
+          this.descripcionL = this.inforPrestamo.descripcion;
+          this.montoMinL = this.inforPrestamo.montoMin;
+          this.montoMaxL = this.inforPrestamo.montoMax;
+          this.plazoMinL = this.inforPrestamo.plazoMin;
+          this.plazoMaxL = this.inforPrestamo.plazoMax;
+          this.tClienteL = this.inforPrestamo.tipo_cliente;
+          document.getElementById('oculto').style.visibility = 'visible';
+        })
+        //this.router.navigate(["/template/amortizacion"]);
   }
 
+  showAmortizationTable(){
+    this.router.navigate(["/template/amortizacion"],{"queryParams": {"monto": this.montoSol, "plazo":  this.plazoSol, "tipoPrestamo": this.inforPrestamo.descripcion } });
+  }
   obtenerListaCuentas() {
     this.cuentasService.getListaCuentas("100445689").subscribe((data) => {
       console.log("lista Cuentas", data);

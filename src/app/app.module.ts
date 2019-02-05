@@ -96,6 +96,7 @@ import { SolicitudPrestamoService } from './Services/Service/solicitudPrestamo.s
 import { CuentasService } from './Services/service/cuentas.service';
 import { FormatoFechaPipe } from './util/formato-fecha.pipe';
 import { CuentaService } from './Services/Service/cuenta.service';
+import { AmortizacionComponent } from './amortizacion/amortizacion.component';
 
 
 @NgModule({
@@ -190,6 +191,7 @@ import { CuentaService } from './Services/Service/cuenta.service';
         LoginComponent,
         TemplateComponent,
         FormatoFechaPipe,
+        AmortizacionComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
