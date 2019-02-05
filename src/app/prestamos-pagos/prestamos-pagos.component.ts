@@ -40,6 +40,7 @@ export class PrestamosPagosComponent implements OnInit {
       this.pagos =[];      
       this.pagos.push(data);
       this.unPago = this.pagos[0];
+      this.montoTotal = this.pagos[0].saldoRestante;
       this.estadoPago();
     });
   }
