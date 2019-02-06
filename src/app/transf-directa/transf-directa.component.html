@@ -6,7 +6,7 @@
       <br />
 
       <div class="card card-w-title">
-        <!--<p-messages [(value)]="msgs"></p-messages>-->
+        <p-messages [(value)]="msgs"></p-messages>
         <div class="ui-g form-group">
           <div class="ui-g-12 ui-md-6">
             <div class="ui-g-12 ui-md-4">
@@ -32,9 +32,8 @@
             <div class="ui-g-12 ui-md-4">
             </div>
             <div class="ui-g-12 ui-md-8">
-              <!--<button pButton type="button" label="Aceptar" (click)="btnAceptar()" icon="fa fa-check-square"></button>-->
-              <p-button label="Aceptar" icon="fa fa-check-square"  (onClick)="mostrar($event, pago)"
-                [disabled]="!permiteTranferir"></p-button>
+              <button pButton type="button" label="Aceptar" (click)="btnAceptar()" icon="fa fa-check-square"></button>
+
               <p-footer>
 
 
@@ -49,18 +48,5 @@
     </div>
   </div>
 
-  <p-dialog header="Detalle Transferencia Directa" [(visible)]="display" [responsive]="true" showEffect="fade" [modal]="true" [minY]="70"
-    [style]="{maxWidth: '400px'}" (onAfterHide)="onDialogHide()">
-    <div class="ui-g" *ngIf="monto">
-        <div class="ui-g-6">Transfercia a la cuenta: </div>
-        <div class="ui-g-6 text-derecha">{{cta_dest}}</div>
-        <div class="ui-g-6">El valor de: </div>
-        <div class="ui-g-6 text-derecha">{{monto}}</div>
-    </div>    
-    <p-footer>
-      <p-button label="Confirmar Transferencia" icon="fa fa-money" (onClick)=" btnAceptar($event)" ></p-button>
-      <p-button label="Cerrar" icon="fa fa-close" (onClick)="display=false" class="ui-button-secondary"></p-button>
-    </p-footer>
-  </p-dialog>
 
 </div>

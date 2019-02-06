@@ -45,8 +45,6 @@ export class PrestamosPagosComponent implements OnInit {
     ];
   }
 
-  constructor( private pagosService: PagosService, private auth:LoginService) { }
-
   ngOnInit() {
     this.curretUser = this.auth.getCurrentUser();
     this.obtenerInfoPago();
@@ -101,13 +99,14 @@ export class PrestamosPagosComponent implements OnInit {
     }, error =>{
       console.log("ocurrio error",error);
       this.display = false;  
+      this.realizarUnaTransaccion();
       this.obtenerInfoPago(); 
     });
     
   }
     
   realizarUnaTransaccion(){
-
+    console.log("aqqq", this.cta_org)
     this.transacccionRQ = {
       cuenta: this.cta_org,
       monto: Number(this.valorPagar),
