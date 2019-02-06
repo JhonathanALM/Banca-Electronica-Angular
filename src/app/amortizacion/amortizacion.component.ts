@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CuentasService } from '../Services/service/cuentas.service';
 import { Usuario } from '../Services/domain/usuario';
 import { MenuItem } from 'primeng/api';
+import { SolicitudPrestamoService } from '../Services/Service/solicitudPrestamo.service';
 
 
 
@@ -51,8 +52,20 @@ export class AmortizacionComponent implements OnInit {
   fechTablaAmortizacion: any = [];
   int: any = "";
   valCuota: any = "";
-
-  constructor(private pagosService: PagosService, private auth: LoginService, private route: ActivatedRoute, private router: Router, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe) {
+  valComision: any = "";
+  montoFinal: any = "";
+  rgPago: RegPago = {
+    cli_id: "",
+    tipoPrestamo: "",
+    fechaCreacion: "",
+    fechaConcesion: "",
+    fechaDesembolso: "",
+    monto: "",
+    plazo: "",
+    montoFinal: ""
+  }
+  nMontoFinal: any = "";
+  constructor(private pagosService: PagosService, private auth: LoginService, private route: ActivatedRoute, private router: Router, private cuentasService: CuentasService, private formatoFechaPipe: FormatoFechaPipe, private solicitudPrestamo: SolicitudPrestamoService) {
     this.cols2 = [
       { field: 'nroCueota', header: 'Nro Cuota' },
       { field: 'fechaPago', header: 'fechaPago' },
@@ -63,7 +76,7 @@ export class AmortizacionComponent implements OnInit {
       { field: 'estado', header: 'Estado' }
     ];
   }
-
+  jsonGuardar: any = [];
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.montoUser = params.monto;
@@ -131,7 +144,7 @@ export class AmortizacionComponent implements OnInit {
       this.userInfor.sDesgravamen = "0.5%";
       this.userInfor.gAdminitstrativos = "0.5%";
       this.userInfor.cntAtencion = "0.5%";
-      this.userInfor.tasainteres = "10.0";
+      this.userInfor.tasainteres = "16.06";
       this.fnlUserInfor.push(this.userInfor);
     });
   }
@@ -146,15 +159,57 @@ export class AmortizacionComponent implements OnInit {
     var inte = this.int / 1200;
     this.valCuota = this.montoUser * (inte * Math.pow(1 + inte, this.plazoUser)) / (Math.pow(inte + 1, this.plazoUser) - 1);
     this.valCuota = this.valCuota.toFixed(2);
+    this.valComision = this.montoUser * 0.15;
+    this.montoFinal = this.montoUser - this.valComision;
     this.unPago = pago;
     this.display = true;
     event.preventDefault();
   }
 
-  btnRegresar(){
+  btnRegresar() {
     this.router.navigate(["/template/solicitudp"]);
   }
 
+  realizarPago() {
+    let fecha = new Date();
+    let dd = fecha.getDate();
+    let mm = fecha.getMonth() + 1;
+    let year = fecha.getFullYear();
+    for (let i = 0; i < this.plazoUser; i++) {
+      var auxmm = (mm + i);
+      if (((auxmm) / 12) >= 1) {
+        year += (auxmm / 12) | 0;
+        auxmm = (auxmm % 12) + 1;
+        year = year - 1;
+      }
+    }
+    this.rgPago = {
+      cli_id: "",
+      tipoPrestamo: "",
+      fechaCreacion: "",
+      fechaConcesion: "",
+      fechaDesembolso: "",
+      monto: "",
+      plazo: "",
+      montoFinal: ""
+    }
+    let fech = new Date();
+    let d = fecha.getDate();
+    let m = fecha.getMonth() + 1;
+    let yy = fecha.getFullYear();
+    this.rgPago.cli_id = this.userInfor.cedula;
+    this.rgPago.tipoPrestamo = this.tipoPresUser;
+    this.rgPago.fechaCreacion = d + "/" + m + "/" + yy;
+    this.rgPago.fechaConcesion = d + "/" + m + "/" + yy;
+    this.rgPago.fechaDesembolso = dd + "/" + auxmm + "/" + year;
+    this.rgPago.monto = this.montoUser;
+    this.rgPago.plazo = this.plazoUser;
+    this.nMontoFinal = this.montoFinal.toString();
+    this.rgPago.montoFinal = this.nMontoFinal;
+    this.jsonGuardar = JSON.stringify(this.rgPago);
+    console.log("JSON A GUARDAR=:>", JSON.stringify(this.rgPago));
+    this.solicitudPrestamo.postSolicitudPrestamo(this.rgPago).subscribe();
+  }
   toNumber(_valor) {
     return parseFloat(_valor).toFixed(2);
   }
@@ -195,10 +250,10 @@ export class AmortizacionComponent implements OnInit {
       }
       function updateTable(pay, amortizationCapital, d, m, y) {
         var auxmm = (m + amortizationTable.length);
-        if (((auxmm)/12)>=1) {
-          y+=(auxmm/12)|0;
-          auxmm = (auxmm%12)+1;
-          
+        if (((auxmm) / 12) >= 1) {
+          y += (auxmm / 12) | 0;
+          auxmm = (auxmm % 12) + 1;
+
         }
         amortizationTable.push({
           period: (amortizationTable.length + 1),
@@ -242,4 +297,15 @@ export class Amortizacion {
   interes: String;
   capital: String;
   saldo: String;
+}
+
+export class RegPago {
+  cli_id: String;
+  tipoPrestamo: String;
+  fechaCreacion: String;
+  fechaConcesion: String;
+  fechaDesembolso: String;
+  monto: String;
+  plazo: String;
+  montoFinal: String;
 }

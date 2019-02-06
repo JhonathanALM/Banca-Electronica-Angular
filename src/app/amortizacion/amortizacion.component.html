@@ -119,10 +119,10 @@
             <div class="ui-g-6 text-derecha">{{ unPago.tasainteres }}</div>
 
             <div class="ui-g-6">Valor Comisión: </div>
-            <div class="ui-g-6 text-derecha">{{ unPago.plazo }}</div>
+            <div class="ui-g-6 text-derecha">{{ valComision }}</div>
 
             <div class="ui-g-6">Monto Final: </div>
-            <div class="ui-g-6 text-derecha">{{ unPago.monto }}</div>
+            <div class="ui-g-6 text-derecha">{{ montoFinal }}</div>
 
             <div class="ui-g-12 text-derecha">_________________________________________________________________</div>
             <div class="ui-g-6">Cuotas Mensuales: </div>
@@ -130,7 +130,7 @@
 
         </div>
         <p-footer>
-            <p-button label="Confirmar Pago" icon="fa fa-money" (onClick)="realizarPago($event)"></p-button>
+            <p-button label="Confirmar Pago" icon="fa fa-money" (onClick)="realizarPago()"></p-button>
             <p-button label="Cerrar" icon="fa fa-close" (onClick)="display=false" class="ui-button-secondary"></p-button>
 
         </p-footer>

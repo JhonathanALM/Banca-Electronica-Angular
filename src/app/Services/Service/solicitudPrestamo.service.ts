@@ -7,6 +7,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 const endponitMovimiento = '/Modulo-Cuentas-Pll-web/api/transaccion/';
 const endponitSolPrestamo = '/Prestamo-web/api/nuevoPrestamo';
 const endpointSoliPrestamo = '/Prestamo-web/api/nuevoPrestamo/';
+const endpointSoliPostPrestamo = '/Prestamo-web/api/nuevoPrestamo/';
 @Injectable({
     providedIn: 'root'
 })
@@ -28,4 +29,20 @@ export class SolicitudPrestamoService {
         return this.http.get(endpointSoliPrestamo + tipoPrestamo).pipe(
             map(this.extractData));
     }
+
+    postSolicitudPrestamo(solicitudPrestamo: Pago) {
+        const url = endpointSoliPostPrestamo;
+        return this.http.post(url, solicitudPrestamo);
+    }
+}
+
+export class Pago {
+    cli_id: String;
+    tipoPrestamo: String;
+    fechaCreacion: String;
+    fechaConcesion: String;
+    fechaDesembolso: String;
+    monto: String;
+    plazo: String;
+    montoFinal: String;
 }
