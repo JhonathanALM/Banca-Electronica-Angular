@@ -8,9 +8,17 @@
         <p-header>
           <div class="ui-helper-clearfix">
             <div class="ui-g">
-              <div class="ui-g-12 ui-md-4">
-                Descripción del Prestamo
-              </div>
+                              
+                <div class="ui-g-12 ui-md-6">
+                  <div class="ui-g-12 ui-md-4">
+                    <label for="dropdown">Cuenta</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-8">
+                    <!--Aqui hay q cambiar-->
+                    <p-dropdown id="dropdown" [options]="saldo" [(ngModel)]="cta_org" placeholder="Seleccione cuenta..."></p-dropdown>
+                  </div>
+                </div>
+               
             </div>
           </div>
         </p-header>
