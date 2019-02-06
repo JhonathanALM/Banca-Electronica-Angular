@@ -64,6 +64,9 @@ export class LoginComponent implements OnInit {
         this.contra = '';
         
       }
+    }, err=>{
+      this.showErrorViaToast();
+      this.contra="";
     });
   }
   showErrorViaToast() {

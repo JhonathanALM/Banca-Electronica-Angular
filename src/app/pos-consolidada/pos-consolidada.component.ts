@@ -1,3 +1,4 @@
+import { Fecha } from './../Services/domain/fecha';
 import { LoginService } from './../services/service/login.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
@@ -6,6 +7,7 @@ import { CuentasService } from '../Services/service/cuentas.service';
 import { Usuario } from '../Services/domain/usuario';
 import { Cuenta } from '../Services/domain/cuenta';
 import { Prestamo } from '../Services/domain/prestamo';
+import { FechaService } from '../Services/Service/fecha.service';
 
 
 
@@ -31,13 +33,15 @@ export class PosConsolidadaComponent implements OnInit {
   identificadorUsuario: MenuItem[];
   miArray = [];
   curretUser: any;
-  constructor(private cuentasService: CuentasService, private auth: LoginService) { }
+  fecha:Date;
+  constructor(private cuentasService: CuentasService, private auth: LoginService, private fechaService: FechaService) { }
   ngOnInit() {
     this.curretUser = this.auth.getCurrentUser();
     console.log("curr::::", this.curretUser);
     this.obtenerListaCuentas();
     this.obtenerListaPrestamos();
     this.obtenerUnUsuario();
+    this.obtenerFecha();
 
     this.cols = [
       { field: 'cuenta', header: 'Cuenta' },
@@ -93,5 +97,11 @@ export class PosConsolidadaComponent implements OnInit {
     let patron = "[UTC]";
     let nuevoValor = "";
     return _miString.replace(patron, nuevoValor);
+  }
+  obtenerFecha() {
+    this.fechaService.getFecha().subscribe((data) => {
+      console.log("lista fechas", data);
+      this.fecha = data.fecha;
+    });
   }
 }
