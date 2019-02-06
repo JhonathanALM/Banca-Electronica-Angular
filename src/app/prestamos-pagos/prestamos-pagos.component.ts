@@ -4,7 +4,9 @@ import { PagosService } from '../Services/Service/pagos.service';
 import { ReqPago } from '../Services/domain/reqpago';
 import { Pago } from '../Services/domain/pago';
 import { LoginService } from './../services/service/login.service';
-
+import { SelectItem } from 'primeng/api';
+import { CuentasService } from '../Services/Service/cuentas.service';
+import { TransaccionRQ } from '../Services/domain/transaccionrq';
 
 
 @Component({
@@ -25,13 +27,43 @@ export class PrestamosPagosComponent implements OnInit {
 
   requestPago: ReqPago;
   curretUser:any;
+    
+  //Listado de cuentas
+  cta_org: any = "";
+  saldo: SelectItem[];
+  cta_origen: any = [];
+
+  transacccionRQ : TransaccionRQ;
+
+  constructor( private pagosService: PagosService, 
+    private auth:LoginService, 
+    private cuentasService: CuentasService) { 
+    this.saldo = [
+      { label: 'cuenta', value: '12345' },
+      { label: 'cuenta', value: '12345' },
+      { label: 'cuenta', value: '12345' }
+    ];
+  }
 
   constructor( private pagosService: PagosService, private auth:LoginService) { }
 
   ngOnInit() {
     this.curretUser = this.auth.getCurrentUser();
     this.obtenerInfoPago();
-
+    this.obtenerListaCuentas();
+  }
+  
+  obtenerListaCuentas() {
+    this.cuentasService.getObtCuentas(this.curretUser).subscribe((data) => {
+      console.log(data);
+      this.cta_origen = data;
+      this.saldo.splice(this.cta_origen.length, this.saldo.length);
+      for (let i = 0; i < this.cta_origen.length; i++) {
+        //CUENTA DE ORIGEN
+        this.saldo[i].label = this.cta_origen[i].cuenta;
+        this.saldo[i].value = this.cta_origen[i].cuenta;
+      }
+    });
   }
 
   obtenerInfoPago() {
@@ -63,7 +95,8 @@ export class PrestamosPagosComponent implements OnInit {
     console.log("realizando pago... ", this.requestPago);
     this.pagosService.sendPrestamo(this.requestPago).subscribe((data)=>{
       console.log("pago realizado...",data);
-      this.obtenerInfoPago();  
+      this.obtenerInfoPago();
+      this.realizarUnaTransaccion();
       this.display = false;  
     }, error =>{
       console.log("ocurrio error",error);
@@ -71,6 +104,20 @@ export class PrestamosPagosComponent implements OnInit {
       this.obtenerInfoPago(); 
     });
     
+  }
+    
+  realizarUnaTransaccion(){
+
+    this.transacccionRQ = {
+      cuenta: this.cta_org,
+      monto: Number(this.valorPagar),
+      tipo: 41
+    }
+    console.log("enviando ",this.transacccionRQ);
+    this.pagosService.sendTransaccion(this.transacccionRQ).subscribe((data) => {
+      console.log("Transacción Realizada Correctamente", data);
+      
+    });
   }
 
   toNumber(_valor){
